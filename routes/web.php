@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('main');
@@ -95,7 +96,23 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     })->name('index');
 
     });
+Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(function () {
+    Route::get('/', [ContactController::class, 'index'])->name('index');
+    Route::post('/heading', [ContactController::class, 'updateHeading'])->name('heading');
+    Route::post('/phone', [ContactController::class, 'updatePhone'])->name('phone');
+    Route::post('/address', [ContactController::class, 'updateAddress'])->name('address');
+    Route::post('/map', [ContactController::class, 'updateMap'])->name('map');
+    Route::post('/institution', [ContactController::class, 'updateInstitution'])->name('institution');
+});
     
-
+    // Contact Section Management
+    Route::prefix('contact')->name('contact.')->group(function () {
+        Route::get('/', [ContactController::class, 'index'])->name('index');
+        Route::post('/heading', [ContactController::class, 'updateHeading'])->name('heading');
+        Route::post('/phone', [ContactController::class, 'updatePhone'])->name('phone');
+        Route::post('/address', [ContactController::class, 'updateAddress'])->name('address');
+        Route::post('/map', [ContactController::class, 'updateMap'])->name('map');
+        Route::post('/institution', [ContactController::class, 'updateInstitution'])->name('institution');
+});
 
 require __DIR__.'/auth.php';

@@ -40,7 +40,7 @@
     <!-- Dosen Section -->
     <div class="pt-12 border-t border-gray-200">
       <h2 class="text-3xl font-light text-gray-800 text-center mb-12 tracking-wide animate-on-scroll fade-in-up">
-        Dosen Pembimbing
+        Dosen Peneliti
       </h2>
 
       <div class="relative mb-20" id="dosenCarouselSection">
@@ -59,7 +59,7 @@
                 AS
               </div>
               <h3 class="text-xl font-semibold text-gray-800 mb-2">Dr. Andi Saputra, S.T., M.Kom</h3>
-              <p class="text-sm text-gray-500">Dosen Pembimbing Utama</p>
+              <p class="text-sm text-gray-500">Dosen Peneliti Utama</p>
             </div>
 
             <div class="min-w-[280px] bg-white border border-gray-100 rounded-3xl p-10 text-center hover:shadow-xl transition-shadow animate-on-scroll fade-in-up" style="animation-delay: 0.1s">
@@ -97,9 +97,9 @@
         </button>
       </div>
 
-      <!-- Investor Section -->
+      <!-- Mitra Section -->
       <h2 class="text-3xl font-light text-gray-800 text-center mb-12 tracking-wide animate-on-scroll fade-in-up">
-        Investor
+       Mitra
       </h2>
 
       <div class="relative">
@@ -118,7 +118,7 @@
                 AN
               </div>
               <h3 class="text-xl font-semibold text-gray-800 mb-2">PT. AgriTech Nusantara</h3>
-              <p class="text-sm text-gray-500">Investor Utama</p>
+              <p class="text-sm text-gray-500" Mitra Utama</p>
             </div>
 
             <div class="min-w-[280px] bg-white border border-gray-100 rounded-3xl p-10 text-center hover:shadow-xl transition-shadow animate-on-scroll fade-in-up" style="animation-delay: 0.1s">
@@ -126,7 +126,7 @@
                 SF
               </div>
               <h3 class="text-xl font-semibold text-gray-800 mb-2">CV. SmartFarm Indonesia</h3>
-              <p class="text-sm text-gray-500">Investor Teknologi</p>
+              <p class="text-sm text-gray-500" Mitra Teknologi</p>
             </div>
 
             <div class="min-w-[280px] bg-white border border-gray-100 rounded-3xl p-10 text-center hover:shadow-xl transition-shadow animate-on-scroll fade-in-up" style="animation-delay: 0.2s">
@@ -142,7 +142,7 @@
                 GF
               </div>
               <h3 class="text-xl font-semibold text-gray-800 mb-2">Green Future Capital</h3>
-              <p class="text-sm text-gray-500">Impact Investor</p>
+              <p class="text-sm text-gray-500">Impact Mitra</p>
             </div>
 
           </div>
@@ -230,7 +230,7 @@
 
         updateCarouselDosen();
 
-        // Carousel Investor
+        // Carousel Mitra
         const trackInvestor = document.getElementById('carouselTrackInvestor');
         const prevBtnInvestor = document.getElementById('prevBtnInvestor');
         const nextBtnInvestor = document.getElementById('nextBtnInvestor');
