@@ -78,9 +78,9 @@
                     <h3 class="text-lg font-semibold text-gray-800">Galeri Foto</h3>
                     <p class="mt-1 text-xs text-gray-500">Klik foto untuk edit caption atau hapus</p>
                 </div>
-                <button onclick="openAddPhotoModal()" class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
+                {{-- <button onclick="openAddPhotoModal()" class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
                     Tambah Foto
-                </button>
+                </button> --}}
             </div>
 
             <div class="p-6">
@@ -93,28 +93,28 @@
                             <div class="absolute bottom-0 left-0 right-0 p-3">
                                 <p class="mb-2 text-sm font-medium text-white line-clamp-2">{{ $photo->deskripsi }}</p>
                                 <div class="flex gap-2">
-                                    <button onclick="editPhoto({{ $photo->id }}, '{{ $photo->image_url }}', '{{ $photo->deskripsi }}')" class="flex-1 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition">
+                                    <button 
+                                        onclick="openEditPhotoModal(
+                                            {{ $photo->id }}, 
+                                            '{{ $photo->foto_file ? Storage::url($photo->foto_file) : '' }}', 
+                                            '{{ addslashes($photo->deskripsi) }}', 
+                                            '{{ route('gallery.foto-galeri.update', $photo->id) }}'
+                                        )" 
+                                        class="w-full px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition">
                                         Edit
                                     </button>
-                                    <form action="" method="POST" class="flex-1" onsubmit="return confirm('Yakin hapus foto ini?')">
-                                        {{-- @csrf --}}
-                                        {{-- @method('DELETE') --}}
-                                        <input type="hidden" name="id" value="{{ $photo->id }}">
-                                        <button type="submit" class="w-full px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition">
-                                            Hapus
-                                        </button>
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     @empty
-                    <div class="py-12 text-center col-span-full">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        <p class="text-gray-500">Belum ada foto di galeri</p>
-                    </div>
+                        <div class="py-12 text-center col-span-full">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            <p class="font-semibold text-gray-700">Data galeri tidak ditemukan.</p>
+                            <p class="mt-1 text-sm text-gray-500">Terjadi kesalahan atau database seeder belum dijalankan.</p>
+                        </div>
                     @endforelse
 
                 </div>
@@ -166,82 +166,11 @@
     </div>
 </main>
 
-{{-- Add Photo Modal --}}
-<div id="addPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
-    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl">
-        <div class="flex items-center justify-between px-6 py-4 border-b">
-            <h3 class="text-xl font-bold text-gray-800">Tambah & Crop Foto</h3>
-            <button onclick="closeAddPhotoModal()" class="text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-
-        <form id="addPhotoForm" action="{{ route('gallery.foto-galeri.store') }}" method="POST" class="p-6">
-            @csrf
-            @error('upload_error')
-                <div class="p-4 mb-4 text-sm text-red-800 bg-red-100 border border-red-400 rounded-lg" role="alert">
-                    <span class="font-semibold">Oops! Terjadi kesalahan:</span> {{ $message }}
-                </div>
-            @enderror
-            
-            <div class="space-y-6"> 
-                <div>
-                    <label class="block mb-2 text-sm font-semibold text-gray-700">Area Crop</label>
-                    <div class="w-full bg-gray-100 border-2 border-dashed rounded-lg min-h-[400px]">
-                        <img 
-                            id="imageToCrop" 
-                            src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="90%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>'
-                            alt="Preview"
-                            class="object-contain w-full h-full"
-                        >
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div>
-                        <label for="photoFile" class="block mb-2 text-sm font-semibold text-gray-700">Pilih File Foto</label>
-                        <input 
-                            type="file" 
-                            id="photoFile" 
-                            name="photo_file"
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                            required
-                            accept="image/*"
-                        >
-                        <p class="mt-1 text-xs text-gray-500">Pilih gambar untuk memulai cropping.</p>
-                    </div>
-
-                    <div>
-                        <label for="addPhotoCaption" class="block mb-2 text-sm font-semibold text-gray-700">Caption</label>
-                        <textarea 
-                            id="addPhotoCaption" 
-                            name="caption"
-                            rows="4"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
-                            placeholder="Deskripsi foto..."
-                            required
-                            maxlength="100"
-                        ></textarea>
-                        <input type="hidden" name="cropped_image_data" id="croppedImageData">
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-end gap-3 pt-6 mt-6 border-t">
-                <button type="button" onclick="closeAddPhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">Batal</button>
-                <button type="button" id="submitCrop" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Simpan Foto</button>
-            </div>
-        </form>
-
-
-    </div>
-</div>
+{{-- kalau sewaktu-waktu ada revisi delete dan tambah, refer back to "minor change on gallery" commit on backend branch --}}
 
 {{-- Edit Photo Modal --}}
 <div id="editPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
-    <div class="w-full max-w-4xl bg-white shadow-2xl rounded-xl">
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl">
         <div class="flex items-center justify-between px-6 py-4 border-b">
             <h3 class="text-xl font-bold text-gray-800">Edit Foto & Caption</h3>
             <button onclick="closeEditPhotoModal()" class="text-gray-400 hover:text-gray-600">
@@ -251,60 +180,57 @@
             </button>
         </div>
 
-        <form id="photoForm" action="" method="POST" class="p-6">
-            {{-- @csrf --}}
-            {{-- @method('PUT') --}}
-            <input type="hidden" name="id" id="photoId">
-
-            <div class="grid gap-6 md:grid-cols-2">
-                {{-- Preview --}}
+        {{-- The form's action will be set dynamically by JavaScript --}}
+        <form id="editPhotoForm" action="" method="POST" class="p-6">
+            @csrf
+            @method('PUT') 
+            
+            <div class="space-y-6"> 
                 <div>
-                    <label class="block mb-2 text-sm font-semibold text-gray-700">Preview Foto</label>
-                    <div class="overflow-hidden border-2 border-gray-300 rounded-lg aspect-[1280/853]">
-                        <img id="photoPreviewImg" src="" alt="Preview" class="object-cover w-full h-full">
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">Area Preview & Crop</label>
+                    <div class="w-full bg-gray-100 border-2 border-dashed rounded-lg min-h-[400px]">
+                        <img 
+                            id="editImageToCrop" 
+                            src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="90%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>'
+                            alt="Preview"
+                            class="object-contain w-full h-full"
+                        >
                     </div>
                 </div>
-
-                {{-- Form --}}
-                <div class="flex flex-col justify-center space-y-6">
+                
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                        <label for="photoUrl" class="block mb-2 text-sm font-semibold text-gray-700">
-                            URL Foto (Tidak bisa diubah)
-                        </label>
-                        <!-- PERUBAHAN: Mengganti <input> dengan <textarea> agar teks URL bisa wrap -->
-                        <textarea 
-                            id="photoUrl" 
-                            name="image_url"
-                            rows="4"
-                            class="w-full px-4 py-2.5 text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-lg cursor-not-allowed focus:outline-none resize-none break-all"
-                            required
-                            readonly
-                        ></textarea>
+                        <label for="editPhotoFile" class="block mb-2 text-sm font-semibold text-gray-700">Ganti Foto (Opsional)</label>
+                        <input 
+                            type="file" 
+                            id="editPhotoFile" 
+                            name="photo_file"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            accept="image/*"
+                        >
+                        <p class="mt-1 text-xs text-gray-500">Pilih file baru jika ingin mengganti foto yang ada.</p>
                     </div>
 
                     <div>
-                        <label for="photoCaption" class="block mb-2 text-sm font-semibold text-gray-700">
-                            Caption <span class="text-red-500">*</span>
-                        </label>
+                        <label for="editPhotoCaption" class="block mb-2 text-sm font-semibold text-gray-700">Caption</label>
                         <textarea 
-                            id="photoCaption" 
+                            id="editPhotoCaption" 
                             name="caption"
                             rows="4"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
                             placeholder="Deskripsi foto..."
                             required
+                            maxlength="100"
                         ></textarea>
+                        
+                        <input type="hidden" name="cropped_image_data" id="editCroppedImageData">
                     </div>
                 </div>
             </div>
 
             <div class="flex justify-end gap-3 pt-6 mt-6 border-t">
-                <button type="button" onclick="closeEditPhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">
-                    Batal
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-                    Simpan Perubahan
-                </button>
+                <button type="button" onclick="closeEditPhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">Batal</button>
+                <button type="button" id="submitEdit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Simpan Perubahan</button>
             </div>
         </form>
     </div>
@@ -386,99 +312,104 @@
 </div>
 
 <script>
-    
-    // 1. Add Photo Modal
-    const modal = document.getElementById('addPhotoModal');
-    const fileInput = document.getElementById('photoFile');
-    const image = document.getElementById('imageToCrop');
-    const croppedImage = document.getElementById('croppedImageData');
-    const submitButton = document.getElementById('submitCrop');
-    const form = document.getElementById('addPhotoForm');
-    let cropper;
 
-    // Add Photo Modal -> Open
-    function openAddPhotoModal() {
-        modal.classList.remove('hidden');
+    // 1. Edit Photo Modal
+    const editModal = document.getElementById('editPhotoModal');
+    const editForm = document.getElementById('editPhotoForm');
+    const editFileInput = document.getElementById('editPhotoFile');
+    const editImage = document.getElementById('editImageToCrop');
+    const editCaptionInput = document.getElementById('editPhotoCaption');
+    const editCroppedImage = document.getElementById('editCroppedImageData');
+    const submitEditButton = document.getElementById('submitEdit');
+    let editCropper;
+
+    // Edit Photo Modal -> Open and Populate Data
+    function openEditPhotoModal(id, imageUrl, caption, updateUrl) { 
+        editForm.action = updateUrl;
+        editCaptionInput.value = caption;
+        
+        // if image source is not empty...
+        if (imageUrl) {
+            editImage.src = imageUrl;
+        }
+
+        editModal.classList.remove('hidden');
     }
 
-    // Add Photo Modal -> Close + Cleanse Data
-    function closeAddPhotoModal() {
-        modal.classList.add('hidden');
-        fileInput.value = ''; // Reset input file
-        image.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="90%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>';
-        if (cropper) {
-            cropper.destroy(); // Hancurkan instance cropper
-            cropper = null; // Pastikan variabel bersih
+    // Edit Photo Modal -> Close and Cleanse Data
+    function closeEditPhotoModal() {
+        editModal.classList.add('hidden');
+        editFileInput.value = '';
+        editCroppedImage.value = '';
+
+        // display thos svg instead
+        editImage.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Memuat Gambar...</text></svg>';
+
+        if (editCropper) {
+            editCropper.destroy();
+            editCropper = null;
         }
     }
-    
-    // Add Photo Modal -> Change Event Listener
-    fileInput.addEventListener('change', function(e) {
+
+    // Edit Photo Modal -> Listen for new file selection to initialize cropper
+    editFileInput.addEventListener('change', function(e) {
         const files = e.target.files;
         if (files && files.length > 0) {
             const reader = new FileReader();
             reader.onload = function(event) {
-                image.src = event.target.result;
+                editImage.src = event.target.result;
                 
-                if (cropper) {
-                    cropper.destroy();
+                // destroy first if exist
+                if (editCropper) {
+                    editCropper.destroy();
                 }
 
-                // Cropper.js
-                cropper = new Cropper(image, {
-                    aspectRatio: 1280 / 853, // Rasio 3:2
+                // new cropper.js 
+                editCropper = new Cropper(editImage, {
+                    aspectRatio: 1280 / 853,
                     viewMode: 1,
                     dragMode: 'crop',
                     guides: true,
                     background: false,
                     autoCropArea: 0.9,
-                    movable: false, // Menghilangkan kemampuan untuk menggeser gambar itu sendiri
-                    toggleDragModeOnDblclick: false, // Mencegah perubahan dragMode saat double-klik
+                    movable: false,
+                    toggleDragModeOnDblclick: false,
                 });
             };
             reader.readAsDataURL(files[0]);
         }
     });
 
-    // Add Photo Modal -> Event Listener save foto
-    submitButton.addEventListener('click', function() {
-        if (!cropper) {
-            alert('Silakan pilih gambar terlebih dahulu.');
-            return;
-        }
-        
+    // Edit Photo Modal -> Handle form submission
+    submitEditButton.addEventListener('click', function() {
         this.disabled = true;
         this.innerText = 'Menyimpan...';
-        
-        const canvas = cropper.getCroppedCanvas({
-            width: 1280,
-            height: 853,
-            imageSmoothingQuality: 'high',
-        });
 
-        canvas.toBlob(function(blob) {
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = function() {
-                const base64data = reader.result;
-                croppedImage.value = base64data;
-                form.submit();
-            };
-        }, 'image/jpeg', 0.9);
+        // new image
+        if (editCropper) {
+            const canvas = editCropper.getCroppedCanvas({
+                width: 1280,
+                height: 853,
+                imageSmoothingQuality: 'high',
+            });
+
+            canvas.toBlob(function(blob) {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    const base64data = reader.result;
+                    editCroppedImage.value = base64data;
+                    editForm.submit();
+                };
+            }, 'image/jpeg', 0.9);
+        } 
+
+        // no new image (cuma caption)
+        else {
+            editCroppedImage.value = ''; // Ensure the cropped data is empty
+            editForm.submit(); // Submit the form as is
+        }
     });
-
-    // 2. Edit Photo Modal
-    function editPhoto(id, imageUrl, caption) {
-        document.getElementById('photoId').value = id;
-        document.getElementById('photoUrl').value = imageUrl;
-        document.getElementById('photoCaption').value = caption;
-        document.getElementById('photoPreviewImg').src = imageUrl;
-        document.getElementById('editPhotoModal').classList.remove('hidden');
-    }
-
-    function closeEditPhotoModal() {
-        document.getElementById('editPhotoModal').classList.add('hidden');
-    }
 
     // 3. Video Modal Functions
     function openVideoModal() {

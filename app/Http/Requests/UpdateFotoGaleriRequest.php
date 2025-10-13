@@ -11,7 +11,7 @@ class UpdateFotoGaleriRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateFotoGaleriRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'caption' => 'required|string|max:100',
+            'cropped_image_data' => 'nullable|string', 
         ];
     }
 }

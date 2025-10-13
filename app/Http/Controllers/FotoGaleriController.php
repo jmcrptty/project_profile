@@ -33,42 +33,8 @@ class FotoGaleriController extends Controller
      */
     public function store(StoreFotoGaleriRequest $request)
     {
-        try {
-            // 1. Ambil data
-            $imageData = $request->input('cropped_image_data');
-
-            // 2. Pisahkan format pada nama file
-            if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
-
-                $imageData = substr($imageData, strpos($imageData, ',') + 1);
-                $type = strtolower($type[1]); // jpg, png, gif
-                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
-                    throw new \Exception('Tipe gambar tidak valid.');
-                }
-                $imageData = base64_decode($imageData);
-                if ($imageData === false) {
-                    throw new \Exception('Gagal mendekode data base64.');
-                }
-            } else {
-                throw new \Exception('Data URI tidak sesuai format.');
-            }
-
-            $fileName = 'galeriFoto/' . Str::random(40) . '.' . $type;
-
-            Storage::disk('public')->put($fileName, $imageData);
-
-            // 5. Simpan informasi ke database
-            FotoGaleri::create([
-                'foto_file' => $fileName,
-                'deskripsi' => $request->caption,
-            ]);
-
-            return back()->with('success-foto', 'Foto berhasil di-upload!');
-            // return redirect()->route('komuni-pertama')->with('success', 'Anda berhasil mendaftar! Tunggu informasi lebih lanjut pada pengumuman');
-
-        } catch (\Exception $e) {
-            return back()->withErrors(['upload_error' => 'Gagal meng-upload foto: ' . $e->getMessage()]);
-        }
+        // larangan hard-coded
+        return redirect()->back()->withErrors(['upload_error' => 'Penambahan foto baru tidak diizinkan.']);
     }
 
     /**
@@ -84,7 +50,8 @@ class FotoGaleriController extends Controller
      */
     public function edit(FotoGaleri $fotoGaleri)
     {
-        //
+        // larangan hard-coded
+        return redirect()->back()->withErrors(['upload_error' => 'Penambahan foto baru tidak diizinkan.']);
     }
 
     /**
@@ -92,7 +59,49 @@ class FotoGaleriController extends Controller
      */
     public function update(UpdateFotoGaleriRequest $request, FotoGaleri $fotoGaleri)
     {
-        //
+        try {
+            // new image inputted
+            if ($request->filled('cropped_image_data')) {
+                
+                $imageData = $request->input('cropped_image_data');
+                
+                if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
+                    $imageData = substr($imageData, strpos($imageData, ',') + 1);
+                    $type = strtolower($type[1]);
+
+                    if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                        throw new \Exception('Tipe gambar tidak valid.');
+                    }
+                    $imageData = base64_decode($imageData);
+                    if ($imageData === false) {
+                        throw new \Exception('Gagal mendekode data base64.');
+                    }
+                } else {
+                    throw new \Exception('Data URI tidak sesuai format.');
+                }
+                
+                // hapus foto lama
+                if ($fotoGaleri->foto_file && Storage::disk('public')->exists($fotoGaleri->foto_file)) {
+                    Storage::disk('public')->delete($fotoGaleri->foto_file);
+                }
+
+                $newFileName = 'galeriFoto/' . Str::random(40) . '.' . $type;
+
+                Storage::disk('public')->put($newFileName, $imageData);
+
+                $fotoGaleri->foto_file = $newFileName;
+            }
+
+            // update caption
+            $fotoGaleri->deskripsi = $request->caption;
+
+            $fotoGaleri->save();
+
+            return back()->with('success-foto', 'Foto berhasil diperbarui!');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['upload_error' => 'Gagal memperbarui foto: ' . $e->getMessage()]);
+        }
     }
 
     /**
@@ -100,6 +109,7 @@ class FotoGaleriController extends Controller
      */
     public function destroy(FotoGaleri $fotoGaleri)
     {
-        //
+        // larangan hard-coded
+        return redirect()->back()->withErrors(['delete_error' => 'Penghapusan foto tidak diizinkan.']);
     }
 }

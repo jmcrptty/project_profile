@@ -23,6 +23,6 @@ class FotoGaleri extends Model
         if ($this->foto_file && Storage::disk('public')->exists($this->foto_file)) {
             return Storage::disk('public')->url($this->foto_file); //ABAIKAN ERROR PADA LINE INI. VSCODE BE TRIPPIN, IM RIGHT
         }
-        return 'https://placehold.co/1280x853/e2e8f0/adb5bd?text=Image+Not+Found';
+        return 'https://placehold.co/1280x853/e2e8f0/adb5bd?text=Unggah+Foto';
     }
 }
