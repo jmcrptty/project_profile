@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FotoGaleriController;
+use App\Http\Controllers\GaleriController;
 
 Route::get('/', function () {
     return view('main');
@@ -63,25 +65,27 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     });
 
     Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard.gallery');
-    })->name('index');
+
+        Route::get('/', [GaleriController::class, 'index'])->name('index');
     
-    Route::post('/store', function () {
-        return redirect()->route('gallery.index')
-            ->with('success', 'Photo added successfully!');
-    })->name('store');
-    
-    Route::put('/video', function () {
-        return redirect()->route('gallery.index')
-            ->with('success', 'Video updated successfully!');
-    })->name('updateVideo');
-    
-    Route::delete('/{id}', function ($id) {
-        return redirect()->route('gallery.index')
-            ->with('success', 'Photo deleted successfully!');
-    })->name('destroy');
-});
+        Route::post('/store', function () {
+            return redirect()->route('gallery.index')
+                ->with('success', 'Photo added successfully!');
+        })->name('store');
+        
+        Route::put('/video', function () {
+            return redirect()->route('gallery.index')
+                ->with('success', 'Video updated successfully!');
+        })->name('updateVideo');
+        
+        Route::delete('/{id}', function ($id) {
+            return redirect()->route('gallery.index')
+                ->with('success', 'Photo deleted successfully!');
+        })->name('destroy');
+
+        // resource controller galeri foto
+        Route::resource('foto-galeri', FotoGaleriController::class);
+    });
 
  Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(function () {
     Route::get('/', function () {
