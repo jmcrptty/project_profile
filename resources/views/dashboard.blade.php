@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - AgriTech IoT Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    {{-- tambahan fitur autocrop --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -111,7 +113,7 @@
         @include('dashboard.sidebar')
 
         {{-- Main Content Area --}}
-        <div class="flex-1 flex flex-col overflow-hidden">
+        <div class="flex flex-col flex-1 overflow-hidden">
             
             {{-- Include Navbar --}}
             @include('dashboard.navbar')
@@ -123,7 +125,7 @@
     </div>
 
     {{-- Overlay untuk Mobile --}}
-    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+    <div id="sidebarOverlay" class="fixed inset-0 z-40 hidden bg-black/50 backdrop-blur-sm lg:hidden"></div>
 
     <script>
         // Sidebar Toggle untuk Mobile
@@ -169,6 +171,9 @@
         updateTime();
         setInterval(updateTime, 60000); // Update setiap menit
     </script>
+
+    {{-- tambahan fitur autocrop --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
 </body>
 </html>

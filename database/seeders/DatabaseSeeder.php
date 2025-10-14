@@ -24,5 +24,9 @@ class DatabaseSeeder extends Seeder
             ContactSeeder::class,
             HomeSeeder::class,
         ]);
+
+        $this->call([
+            FotoGaleriSeeder::class,
+        ]);
     }
 }

@@ -3,18 +3,18 @@
 
 @section('content')
 
-<main class="flex-1 overflow-y-auto bg-gray-50 p-6">
+<main class="flex-1 p-6 overflow-y-auto bg-gray-50">
     <div class="max-w-6xl mx-auto space-y-6">
         
         {{-- Header --}}
         <div class="mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Edit Gallery Section</h2>
-            <p class="text-gray-600 text-sm mt-1">Kelola foto dan video demo project</p>
+            <p class="mt-1 text-sm text-gray-600">Kelola foto dan video demo project</p>
         </div>
 
         {{-- Success Alert --}}
         @if(session('success'))
-        <div class="bg-green-50 border border-green-200 text-green-800 rounded-lg p-4 flex items-center gap-3">
+        <div class="flex items-center gap-3 p-4 text-green-800 border border-green-200 rounded-lg bg-green-50">
             <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
@@ -23,12 +23,12 @@
         @endif
 
         {{-- Stats --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-4 text-white">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="p-4 text-white rounded-lg bg-gradient-to-br from-blue-500 to-blue-600">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-blue-100 text-xs font-medium">Total Foto</p>
-                        <p class="text-2xl font-bold mt-1">{{ count($photos ?? []) }}</p>
+                        <p class="text-xs font-medium text-blue-100">Total Foto</p>
+                        <p class="mt-1 text-2xl font-bold">{{ count($photos ?? []) }}</p>
                     </div>
                     <svg class="w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
@@ -36,11 +36,11 @@
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-4 text-white">
+            <div class="p-4 text-white rounded-lg bg-gradient-to-br from-purple-500 to-purple-600">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-purple-100 text-xs font-medium">Video Demo</p>
-                        <p class="text-xl font-bold mt-1">1</p>
+                        <p class="text-xs font-medium text-purple-100">Video Demo</p>
+                        <p class="mt-1 text-xl font-bold">1</p>
                     </div>
                     <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
@@ -48,11 +48,11 @@
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-4 text-white">
+            <div class="p-4 text-white rounded-lg bg-gradient-to-br from-green-500 to-green-600">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-green-100 text-xs font-medium">Status</p>
-                        <p class="text-xl font-bold mt-1">Active</p>
+                        <p class="text-xs font-medium text-green-100">Status</p>
+                        <p class="mt-1 text-xl font-bold">Active</p>
                     </div>
                     <svg class="w-8 h-8 text-green-200" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -61,45 +61,60 @@
             </div>
         </div>
 
+        {{-- Success Alert: Upload Foto --}}
+        @if(session('success-foto'))
+        <div class="flex items-center gap-3 p-4 text-green-800 border border-green-200 rounded-lg bg-green-50">
+            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span class="font-medium">{{ session('success-foto') }}</span>
+        </div>
+        @endif
+
         {{-- Photo Gallery Grid --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b">
-                <h3 class="text-lg font-semibold text-gray-800">Galeri Foto</h3>
-                <p class="text-xs text-gray-500 mt-1">Klik foto untuk edit caption atau hapus</p>
+        <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
+            <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div class="keterangan">
+                    <h3 class="text-lg font-semibold text-gray-800">Galeri Foto</h3>
+                    <p class="mt-1 text-xs text-gray-500">Klik foto untuk edit caption atau hapus</p>
+                </div>
+                {{-- <button onclick="openAddPhotoModal()" class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
+                    Tambah Foto
+                </button> --}}
             </div>
 
             <div class="p-6">
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                     
                     @forelse($photos ?? [] as $photo)
-                    <div class="group relative aspect-square rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-500 transition">
-                        <img src="{{ $photo->image_url }}" alt="{{ $photo->caption }}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition">
+                    <div class="relative overflow-hidden transition border-2 border-gray-200 rounded-lg group aspect-[1280/853] hover:border-green-500">
+                        <img src="{{ $photo->image_url }}" alt="{{ $photo->deskripsi }}" class="object-cover w-full h-full">
+                        <div class="absolute inset-0 transition opacity-0 bg-gradient-to-t from-black/70 to-transparent group-hover:opacity-100">
                             <div class="absolute bottom-0 left-0 right-0 p-3">
-                                <p class="text-white text-sm font-medium mb-2 line-clamp-2">{{ $photo->caption }}</p>
+                                <p class="mb-2 text-sm font-medium text-white line-clamp-2">{{ $photo->deskripsi }}</p>
                                 <div class="flex gap-2">
-                                    <button onclick="editPhoto({{ $photo->id }}, '{{ $photo->image_url }}', '{{ $photo->caption }}')" class="flex-1 px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition">
+                                    <button 
+                                        onclick="openEditPhotoModal(
+                                            {{ $photo->id }}, 
+                                            '{{ $photo->foto_file ? Storage::url($photo->foto_file) : '' }}', 
+                                            '{{ addslashes($photo->deskripsi) }}', 
+                                            '{{ route('gallery.foto-galeri.update', $photo->id) }}'
+                                        )" 
+                                        class="w-full px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition">
                                         Edit
                                     </button>
-                                    <form action="" method="POST" class="flex-1" onsubmit="return confirm('Yakin hapus foto ini?')">
-                                        {{-- @csrf --}}
-                                        {{-- @method('DELETE') --}}
-                                        <input type="hidden" name="id" value="{{ $photo->id }}">
-                                        <button type="submit" class="w-full px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition">
-                                            Hapus
-                                        </button>
-                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     @empty
-                    <div class="col-span-full text-center py-12">
-                        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        <p class="text-gray-500">Belum ada foto di galeri</p>
-                    </div>
+                        <div class="py-12 text-center col-span-full">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                            <p class="font-semibold text-gray-700">Data galeri tidak ditemukan.</p>
+                            <p class="mt-1 text-sm text-gray-500">Terjadi kesalahan atau database seeder belum dijalankan.</p>
+                        </div>
                     @endforelse
 
                 </div>
@@ -107,16 +122,16 @@
         </div>
 
         {{-- Video Demo Section --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="bg-gradient-to-r from-purple-50 to-pink-50 px-6 py-4 border-b flex items-center justify-between">
+        <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
+            <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-purple-50 to-pink-50">
                 <h3 class="text-lg font-semibold text-gray-800">Video Demo</h3>
-                <button onclick="openVideoModal()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition">
+                <button onclick="openVideoModal()" class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
                     Edit Video
                 </button>
             </div>
 
             <div class="p-6">
-                <div class="aspect-video rounded-lg overflow-hidden border bg-gray-900">
+                <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
                     @if(!empty($video->youtube_url ?? ''))
                     <iframe 
                         id="videoPreview"
@@ -128,7 +143,7 @@
                         allowfullscreen>
                     </iframe>
                     @else
-                    <div class="w-full h-full flex items-center justify-center text-gray-500">
+                    <div class="flex items-center justify-center w-full h-full text-gray-500">
                         <div class="text-center">
                             <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -140,9 +155,9 @@
                 </div>
                 
                 @if(!empty($video->title ?? ''))
-                <div class="mt-4 p-4 bg-gray-800 rounded-lg">
-                    <h4 class="font-semibold text-white mb-1">{{ $video->title }}</h4>
-                    <p class="text-gray-400 text-sm">{{ $video->description }}</p>
+                <div class="p-4 mt-4 bg-gray-800 rounded-lg">
+                    <h4 class="mb-1 font-semibold text-white">{{ $video->title }}</h4>
+                    <p class="text-sm text-gray-400">{{ $video->description }}</p>
                 </div>
                 @endif
             </div>
@@ -151,82 +166,82 @@
     </div>
 </main>
 
+{{-- kalau sewaktu-waktu ada revisi delete dan tambah, refer back to "minor change on gallery" commit on backend branch --}}
+
 {{-- Edit Photo Modal --}}
-<div id="photoModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full">
-        <div class="border-b px-6 py-4 flex items-center justify-between">
-            <h3 class="text-xl font-bold text-gray-800">Edit Foto</h3>
-            <button onclick="closePhotoModal()" class="text-gray-400 hover:text-gray-600">
+<div id="editPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
+            <h3 class="text-xl font-bold text-gray-800">Edit Foto & Caption</h3>
+            <button onclick="closeEditPhotoModal()" class="text-gray-400 hover:text-gray-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
 
-        <form id="photoForm" action="" method="POST" class="p-6">
-            {{-- @csrf --}}
-            {{-- @method('PUT') --}}
-            <input type="hidden" name="id" id="photoId">
-
-            <div class="grid md:grid-cols-2 gap-6">
-                {{-- Preview --}}
+        {{-- The form's action will be set dynamically by JavaScript --}}
+        <form id="editPhotoForm" action="" method="POST" class="p-6">
+            @csrf
+            @method('PUT') 
+            
+            <div class="space-y-6"> 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Preview Foto</label>
-                    <div class="aspect-square rounded-lg overflow-hidden border-2 border-gray-300">
-                        <img id="photoPreviewImg" src="" alt="Preview" class="w-full h-full object-cover">
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">Area Preview & Crop</label>
+                    <div class="w-full bg-gray-100 border-2 border-dashed rounded-lg min-h-[400px]">
+                        <img 
+                            id="editImageToCrop" 
+                            src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="90%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>'
+                            alt="Preview"
+                            class="object-contain w-full h-full"
+                        >
                     </div>
                 </div>
-
-                {{-- Form --}}
-                <div class="space-y-4">
+                
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                        <label for="photoUrl" class="block text-sm font-semibold text-gray-700 mb-2">
-                            URL Foto <span class="text-red-500">*</span>
-                        </label>
+                        <label for="editPhotoFile" class="block mb-2 text-sm font-semibold text-gray-700">Ganti Foto (Opsional)</label>
                         <input 
-                            type="url" 
-                            id="photoUrl" 
-                            name="image_url"
-                            class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                            placeholder="https://example.com/image.jpg"
-                            required
-                            onchange="updatePhotoPreview()"
+                            type="file" 
+                            id="editPhotoFile" 
+                            name="photo_file"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            accept="image/*"
                         >
-                        <p class="text-xs text-gray-500 mt-1">Link foto dari internet atau upload</p>
+                        <p class="mt-1 text-xs text-gray-500">Pilih file baru jika ingin mengganti foto yang ada.</p>
                     </div>
 
                     <div>
-                        <label for="photoCaption" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Caption <span class="text-red-500">*</span>
-                        </label>
+                        <label for="editPhotoCaption" class="block mb-2 text-sm font-semibold text-gray-700">Caption</label>
                         <textarea 
-                            id="photoCaption" 
+                            id="editPhotoCaption" 
                             name="caption"
                             rows="4"
-                            class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
                             placeholder="Deskripsi foto..."
                             required
+                            maxlength="100"
                         ></textarea>
+                        
+                        <input type="hidden" name="cropped_image_data" id="editCroppedImageData">
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 pt-6 border-t mt-6">
-                <button type="button" onclick="closePhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">
-                    Batal
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-                    Simpan Perubahan
-                </button>
+            <div class="flex justify-end gap-3 pt-6 mt-6 border-t">
+                <button type="button" onclick="closeEditPhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">Batal</button>
+                <button type="button" id="submitEdit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Simpan Perubahan</button>
             </div>
         </form>
     </div>
 </div>
 
+
+
 {{-- Edit Video Modal --}}
-<div id="videoModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full">
-        <div class="border-b px-6 py-4 flex items-center justify-between">
+<div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
+    <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
             <h3 class="text-xl font-bold text-gray-800">Edit Video Demo</h3>
             <button onclick="closeVideoModal()" class="text-gray-400 hover:text-gray-600">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +255,7 @@
             {{-- @method('PUT') --}}
 
             <div>
-                <label for="videoUrl" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="videoUrl" class="block mb-2 text-sm font-semibold text-gray-700">
                     YouTube URL <span class="text-red-500">*</span>
                 </label>
                 <input 
@@ -252,11 +267,11 @@
                     placeholder="https://www.youtube.com/watch?v=..."
                     required
                 >
-                <p class="text-xs text-gray-500 mt-1">Link YouTube (akan otomatis dikonversi ke embed)</p>
+                <p class="mt-1 text-xs text-gray-500">Link YouTube (akan otomatis dikonversi ke embed)</p>
             </div>
 
             <div>
-                <label for="videoTitle" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="videoTitle" class="block mb-2 text-sm font-semibold text-gray-700">
                     Judul Video <span class="text-red-500">*</span>
                 </label>
                 <input 
@@ -271,7 +286,7 @@
             </div>
 
             <div>
-                <label for="videoDescription" class="block text-sm font-semibold text-gray-700 mb-2">
+                <label for="videoDescription" class="block mb-2 text-sm font-semibold text-gray-700">
                     Deskripsi Video <span class="text-red-500">*</span>
                 </label>
                 <textarea 
@@ -297,49 +312,129 @@
 </div>
 
 <script>
-// Photo Modal Functions
-function editPhoto(id, imageUrl, caption) {
-    document.getElementById('photoId').value = id;
-    document.getElementById('photoUrl').value = imageUrl;
-    document.getElementById('photoCaption').value = caption;
-    document.getElementById('photoPreviewImg').src = imageUrl;
-    document.getElementById('photoModal').classList.remove('hidden');
-}
 
-function closePhotoModal() {
-    document.getElementById('photoModal').classList.add('hidden');
-}
+    // 1. Edit Photo Modal
+    const editModal = document.getElementById('editPhotoModal');
+    const editForm = document.getElementById('editPhotoForm');
+    const editFileInput = document.getElementById('editPhotoFile');
+    const editImage = document.getElementById('editImageToCrop');
+    const editCaptionInput = document.getElementById('editPhotoCaption');
+    const editCroppedImage = document.getElementById('editCroppedImageData');
+    const submitEditButton = document.getElementById('submitEdit');
+    let editCropper;
 
-function updatePhotoPreview() {
-    const url = document.getElementById('photoUrl').value;
-    if (url) {
-        document.getElementById('photoPreviewImg').src = url;
+    // Edit Photo Modal -> Open and Populate Data
+    function openEditPhotoModal(id, imageUrl, caption, updateUrl) { 
+        editForm.action = updateUrl;
+        editCaptionInput.value = caption;
+        
+        // if image source is not empty...
+        if (imageUrl) {
+            editImage.src = imageUrl;
+        }
+
+        editModal.classList.remove('hidden');
     }
-}
 
-// Video Modal Functions
-function openVideoModal() {
-    document.getElementById('videoModal').classList.remove('hidden');
-}
+    // Edit Photo Modal -> Close and Cleanse Data
+    function closeEditPhotoModal() {
+        editModal.classList.add('hidden');
+        editFileInput.value = '';
+        editCroppedImage.value = '';
 
-function closeVideoModal() {
-    document.getElementById('videoModal').classList.add('hidden');
-}
+        // display thos svg instead
+        editImage.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Memuat Gambar...</text></svg>';
 
-// Close modals on ESC
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closePhotoModal();
-        closeVideoModal();
+        if (editCropper) {
+            editCropper.destroy();
+            editCropper = null;
+        }
     }
-});
 
-// Close modals on outside click
-document.querySelectorAll('[id$="Modal"]').forEach(modal => {
-    modal.addEventListener('click', function(e) {
-        if (e.target === this) this.classList.add('hidden');
+    // Edit Photo Modal -> Listen for new file selection to initialize cropper
+    editFileInput.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                editImage.src = event.target.result;
+                
+                // destroy first if exist
+                if (editCropper) {
+                    editCropper.destroy();
+                }
+
+                // new cropper.js 
+                editCropper = new Cropper(editImage, {
+                    aspectRatio: 1280 / 853,
+                    viewMode: 1,
+                    dragMode: 'crop',
+                    guides: true,
+                    background: false,
+                    autoCropArea: 0.9,
+                    movable: false,
+                    toggleDragModeOnDblclick: false,
+                });
+            };
+            reader.readAsDataURL(files[0]);
+        }
     });
-});
+
+    // Edit Photo Modal -> Handle form submission
+    submitEditButton.addEventListener('click', function() {
+        this.disabled = true;
+        this.innerText = 'Menyimpan...';
+
+        // new image
+        if (editCropper) {
+            const canvas = editCropper.getCroppedCanvas({
+                width: 1280,
+                height: 853,
+                imageSmoothingQuality: 'high',
+            });
+
+            canvas.toBlob(function(blob) {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    const base64data = reader.result;
+                    editCroppedImage.value = base64data;
+                    editForm.submit();
+                };
+            }, 'image/jpeg', 0.9);
+        } 
+
+        // no new image (cuma caption)
+        else {
+            editCroppedImage.value = ''; // Ensure the cropped data is empty
+            editForm.submit(); // Submit the form as is
+        }
+    });
+
+    // 3. Video Modal Functions
+    function openVideoModal() {
+        document.getElementById('videoModal').classList.remove('hidden');
+    }
+
+    function closeVideoModal() {
+        document.getElementById('videoModal').classList.add('hidden');
+    }
+
+    // Close modals on ESC - perlu kah?
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closePhotoModal();
+            closeEditPhotoModal();
+            closeVideoModal();
+        }
+    });
+
+    // Close modals on outside click
+    document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.add('hidden');
+        });
+    });
 </script>
 
 @endsection

@@ -1,14 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FotoGaleriController;
+
 
 use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('main');
 });
+
+Route::get('/', [PageController::class, 'index']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -73,6 +80,7 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
         Route::delete('/delete-image', [HomeController::class, 'deleteImage'])->name('deleteImage');
     });
 
+
      Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
     Route::get('/', function () {
         return view('dashboard.gallery');
@@ -93,6 +101,17 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
             ->with('success', 'Photo deleted successfully!');
     })->name('destroy');
 });
+
+    Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
+
+        Route::get('/', [GaleriController::class, 'index'])->name('index');
+
+        // resource controller galeri foto
+        Route::resource('foto-galeri', FotoGaleriController::class)->except([
+            'create', 'store', 'show', 'edit', 'destroy'
+        ]);
+    });
+
 
  Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(function () {
     Route::get('/', function () {
@@ -137,6 +156,4 @@ Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(
 
     });
 
-   
-    
 require __DIR__.'/auth.php';
