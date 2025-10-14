@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 
+use App\Http\Controllers\HomeController;
+
 Route::get('/', function () {
     return view('main');
 });
@@ -60,9 +62,18 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     })->name('update');
 });
 
+// Home Section Routes
+    Route::prefix('home')->name('home.')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::post('/media', [HomeController::class, 'updateMedia'])->name('media');
+        Route::post('/subtitle', [HomeController::class, 'updateSubtitle'])->name('subtitle');
+        Route::post('/title', [HomeController::class, 'updateTitle'])->name('title');
+        Route::post('/description', [HomeController::class, 'updateDescription'])->name('description');
+        Route::post('/button', [HomeController::class, 'updateButton'])->name('button');
+        Route::delete('/delete-image', [HomeController::class, 'deleteImage'])->name('deleteImage');
     });
 
-    Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
+     Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
     Route::get('/', function () {
         return view('dashboard.gallery');
     })->name('index');
@@ -115,4 +126,17 @@ Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(
         Route::post('/institution', [ContactController::class, 'updateInstitution'])->name('institution');
 });
 
+
+
+    Route::prefix('home')->name('home.')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/edit', [HomeController::class, 'edit'])->name('edit');
+        Route::put('/', [HomeController::class, 'update'])->name('update');
+        Route::delete('/delete-image', [HomeController::class, 'deleteImage'])->name('deleteImage');
+    });
+
+    });
+
+   
+    
 require __DIR__.'/auth.php';

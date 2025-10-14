@@ -13,72 +13,7 @@
             </div>
         </div>
 
-        {{-- Stats --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-4 text-white">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-purple-100 text-xs font-medium">Code Languages</p>
-                        <p class="text-2xl font-bold mt-1">2</p>
-                    </div>
-                    <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
-            </div>
 
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-4 text-white">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-blue-100 text-xs font-medium">Requirements</p>
-                        <p class="text-2xl font-bold mt-1">10</p>
-                    </div>
-                    <svg class="w-8 h-8 text-blue-200" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-4 text-white">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-green-100 text-xs font-medium">GitHub Status</p>
-                        <p class="text-xl font-bold mt-1">Active</p>
-                    </div>
-                    <svg class="w-8 h-8 text-green-200" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        {{-- Heading Section --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 px-6 py-4 border-b flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-800">Heading Section</h3>
-                </div>
-                <button onclick="openHeadingModal()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition">
-                    Edit
-                </button>
-            </div>
-            <div class="p-6 space-y-4">
-                <div>
-                    <label class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</label>
-                    <p class="text-gray-800 font-medium mt-1" id="headingTitle">Kode Project IoT</p>
-                </div>
-                <div>
-                    <label class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Subtitle</label>
-                    <p class="text-gray-600 mt-1" id="headingSubtitle">Source code untuk ESP32 dan monitoring system</p>
-                </div>
-            </div>
-        </div>
 
         {{-- Code Sections --}}
         <div class="grid md:grid-cols-2 gap-6">
@@ -92,7 +27,7 @@
                                 <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-semibold text-gray-800">ESP32 Arduino Code</h3>
+                        <h3 class="text-lg font-semibold text-gray-800"></h3>
                     </div>
                     <button onclick="openArduinoModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition">
                         Edit
