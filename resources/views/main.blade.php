@@ -10,10 +10,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .heading-font {
+      font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+      letter-spacing: -0.02em;
     }
     
     .video-overlay {

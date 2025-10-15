@@ -5,25 +5,26 @@
       
       <!-- Logo -->
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white/90 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-green-700" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
-          </svg>
+        <!-- 3 Logo Sejajar -->
+        <div class="flex items-center gap-2">
+          <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-10 w-auto object-contain">
+          <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-10 w-auto object-contain">
+          <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-10 w-auto object-contain">
         </div>
-        <span class="text-white logo-text font-semibold text-xl tracking-wide">AGRITECH IoT</span>
+        <span class="text-gray-800 logo-text font-semibold text-lg tracking-wide">Fun Coding Mini Simulator</span>
       </div>
-      
+
       <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-white/90 text-sm">
-        <a href="#home" class="hover:text-white transition">Beranda</a>
-        <a href="#about" class="hover:text-white transition">Tentang</a>
-        <a href="#gallery" class="hover:text-white transition">Galeri</a>
-        <a href="#code" class="hover:text-white transition">Kode Project</a>
-        <a href="#contact" class="hover:text-white transition">Kontak</a>
+      <div class="hidden md:flex items-center gap-8 text-gray-800 text-sm">
+        <a href="#home" class="hover:text-gray-600 transition">Beranda</a>
+        <a href="#about" class="hover:text-gray-600 transition">Tentang</a>
+        <a href="#gallery" class="hover:text-gray-600 transition">Galeri</a>
+        <a href="#code" class="hover:text-gray-600 transition">Kode Project</a>
+        <a href="#contact" class="hover:text-gray-600 transition">Kontak</a>
       </div>
-      
+
       <!-- Mobile Menu Button -->
-      <button id="mobileMenuBtn" class="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition">
+      <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
         <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -35,12 +36,12 @@
 
     <!-- Mobile Menu Dropdown -->
     <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
-      <div class="flex flex-col space-y-3 text-white/90 text-sm">
-        <a href="#home" class="hover:text-white transition py-2 px-4 hover:bg-white/10 rounded-lg">Beranda</a>
-        <a href="#about" class="hover:text-white transition py-2 px-4 hover:bg-white/10 rounded-lg">Tentang</a>
-        <a href="#gallery" class="hover:text-white transition py-2 px-4 hover:bg-white/10 rounded-lg">Galeri</a>
-        <a href="#code" class="hover:text-white transition py-2 px-4 hover:bg-white/10 rounded-lg">Kode Project</a>
-        <a href="#contact" class="hover:text-white transition py-2 px-4 hover:bg-white/10 rounded-lg">Kontak</a>
+      <div class="flex flex-col space-y-3 text-gray-800 text-sm">
+        <a href="#home" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Beranda</a>
+        <a href="#about" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Tentang</a>
+        <a href="#gallery" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Galeri</a>
+        <a href="#code" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Kode Project</a>
+        <a href="#contact" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Kontak</a>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
 
 <main class="flex-1 overflow-y-auto bg-gray-50 p-6">
     <div class="space-y-6">
-        
+
         {{-- Header --}}
         <div class="flex justify-between items-center">
             <div>
@@ -13,11 +13,12 @@
             </div>
         </div>
 
-
+        {{-- Success/Error Messages --}}
+        <div id="alertContainer"></div>
 
         {{-- Code Sections --}}
         <div class="grid md:grid-cols-2 gap-6">
-            
+
             {{-- Arduino Code --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-gradient-to-r from-blue-50 to-cyan-50 px-6 py-4 border-b flex items-center justify-between">
@@ -27,7 +28,7 @@
                                 <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-semibold text-gray-800"></h3>
+                        <h3 class="text-lg font-semibold text-gray-800">Offline code</h3>
                     </div>
                     <button onclick="openArduinoModal()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition">
                         Edit
@@ -35,13 +36,7 @@
                 </div>
                 <div class="p-6">
                     <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-xs text-green-400" id="arduinoCodePreview">#include &lt;WiFi.h&gt;
-#include &lt;DHT.h&gt;
-
-void setup() {
-  Serial.begin(115200);
-  // More code...
-}</pre>
+                        <pre class="text-xs text-green-400" id="arduinoCodePreview">{{ Str::limit($code->arduino_code ?? 'No code yet', 150) }}</pre>
                     </div>
                     <p class="text-xs text-gray-500 mt-3">Click edit to modify the full Arduino code</p>
                 </div>
@@ -56,7 +51,7 @@ void setup() {
                                 <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h3 class="text-lg font-semibold text-gray-800">Python Backend Code</h3>
+                        <h3 class="text-lg font-semibold text-gray-800">Online code</h3>
                     </div>
                     <button onclick="openPythonModal()" class="px-3 py-1.5 bg-yellow-600 hover:bg-yellow-700 text-white text-sm rounded-lg transition">
                         Edit
@@ -64,11 +59,7 @@ void setup() {
                 </div>
                 <div class="p-6">
                     <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-xs text-green-400" id="pythonCodePreview">from flask import Flask
-import paho.mqtt.client as mqtt
-
-app = Flask(__name__)
-# More code...</pre>
+                        <pre class="text-xs text-green-400" id="pythonCodePreview">{{ Str::limit($code->python_code ?? 'No code yet', 150) }}</pre>
                     </div>
                     <p class="text-xs text-gray-500 mt-3">Click edit to modify the full Python code</p>
                 </div>
@@ -92,18 +83,18 @@ app = Flask(__name__)
                 </button>
             </div>
             <div class="p-6">
-                <a href="#" id="githubLink" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
+                <a href="{{ $code->github_url ?? '#' }}" id="githubLink" target="_blank" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                     </svg>
-                    <span id="githubUrlText">https://github.com/agritech-iot/project</span>
+                    <span id="githubUrlText">{{ $code->github_url ?? 'No URL set' }}</span>
                 </a>
             </div>
         </div>
 
         {{-- Requirements --}}
         <div class="grid md:grid-cols-2 gap-6">
-            
+
             {{-- Hardware Requirements --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b flex items-center justify-between">
@@ -122,11 +113,11 @@ app = Flask(__name__)
                 </div>
                 <div class="p-6">
                     <ul class="space-y-2 text-sm text-gray-700" id="hardwareList">
-                        <li>• ESP32 Development Board</li>
-                        <li>• DHT22 Temperature & Humidity Sensor</li>
-                        <li>• Soil Moisture Sensor</li>
-                        <li>• 5V Relay Module</li>
-                        <li>• Water Pump (12V)</li>
+                        @forelse($code->hardware_requirements ?? [] as $item)
+                            <li>• {{ $item }}</li>
+                        @empty
+                            <li class="text-gray-400">No hardware requirements set</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
@@ -148,11 +139,11 @@ app = Flask(__name__)
                 </div>
                 <div class="p-6">
                     <ul class="space-y-2 text-sm text-gray-700" id="softwareList">
-                        <li>• Arduino IDE / PlatformIO</li>
-                        <li>• Python Flask (Backend)</li>
-                        <li>• MySQL Database</li>
-                        <li>• React.js (Dashboard)</li>
-                        <li>• MQTT Protocol</li>
+                        @forelse($code->software_stack ?? [] as $item)
+                            <li>• {{ $item }}</li>
+                        @empty
+                            <li class="text-gray-400">No software stack set</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
@@ -161,34 +152,6 @@ app = Flask(__name__)
 
     </div>
 </main>
-
-{{-- Heading Modal --}}
-<div id="headingModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full">
-        <div class="border-b px-6 py-4 flex items-center justify-between">
-            <h3 class="text-xl font-bold text-gray-800">Edit Heading</h3>
-            <button onclick="closeHeadingModal()" class="text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-        </div>
-        <form class="p-6 space-y-4">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Title</label>
-                <input type="text" id="inputHeadingTitle" value="Kode Project IoT" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Subtitle</label>
-                <input type="text" id="inputHeadingSubtitle" value="Source code untuk ESP32 dan monitoring system" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div class="flex justify-end gap-3 pt-4 border-t">
-                <button type="button" onclick="closeHeadingModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="saveHeading()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg">Save</button>
-            </div>
-        </form>
-    </div>
-</div>
 
 {{-- Arduino Code Modal --}}
 <div id="arduinoModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -201,19 +164,15 @@ app = Flask(__name__)
                 </svg>
             </button>
         </div>
-        <form class="p-6 flex-1 overflow-y-auto">
+        <form id="arduinoForm" class="p-6 flex-1 overflow-y-auto">
+            @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Arduino/ESP32 Code</label>
-                <textarea id="inputArduinoCode" rows="20" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="Paste your Arduino code here...">#include <WiFi.h>
-#include <DHT.h>
-
-void setup() {
-  Serial.begin(115200);
-}</textarea>
+                <textarea name="arduino_code" id="inputArduinoCode" rows="20" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="Paste your Arduino code here...">{{ $code->arduino_code ?? '' }}</textarea>
             </div>
             <div class="flex justify-end gap-3 pt-4 border-t mt-4">
                 <button type="button" onclick="closeArduinoModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="saveArduino()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Save</button>
+                <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Save</button>
             </div>
         </form>
     </div>
@@ -230,17 +189,15 @@ void setup() {
                 </svg>
             </button>
         </div>
-        <form class="p-6 flex-1 overflow-y-auto">
+        <form id="pythonForm" class="p-6 flex-1 overflow-y-auto">
+            @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Python Backend Code</label>
-                <textarea id="inputPythonCode" rows="20" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-yellow-500 font-mono text-sm" placeholder="Paste your Python code here...">from flask import Flask
-import paho.mqtt.client as mqtt
-
-app = Flask(__name__)</textarea>
+                <textarea name="python_code" id="inputPythonCode" rows="20" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-yellow-500 font-mono text-sm" placeholder="Paste your Python code here...">{{ $code->python_code ?? '' }}</textarea>
             </div>
             <div class="flex justify-end gap-3 pt-4 border-t mt-4">
                 <button type="button" onclick="closePythonModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="savePython()" class="px-6 py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg">Save</button>
+                <button type="submit" class="px-6 py-2.5 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg">Save</button>
             </div>
         </form>
     </div>
@@ -257,14 +214,15 @@ app = Flask(__name__)</textarea>
                 </svg>
             </button>
         </div>
-        <form class="p-6 space-y-4">
+        <form id="githubForm" class="p-6 space-y-4">
+            @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">GitHub Repository URL</label>
-                <input type="url" id="inputGithubUrl" value="https://github.com/agritech-iot/project" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-gray-500">
+                <input type="url" name="github_url" id="inputGithubUrl" value="{{ $code->github_url ?? '' }}" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-gray-500">
             </div>
             <div class="flex justify-end gap-3 pt-4 border-t">
                 <button type="button" onclick="closeGithubModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="saveGithub()" class="px-6 py-2.5 bg-gray-700 hover:bg-gray-800 text-white rounded-lg">Save</button>
+                <button type="submit" class="px-6 py-2.5 bg-gray-700 hover:bg-gray-800 text-white rounded-lg">Save</button>
             </div>
         </form>
     </div>
@@ -281,19 +239,16 @@ app = Flask(__name__)</textarea>
                 </svg>
             </button>
         </div>
-        <form class="p-6 space-y-4">
+        <form id="hardwareForm" class="p-6 space-y-4">
+            @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Hardware List (one per line)</label>
-                <textarea id="inputHardware" rows="8" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500" placeholder="ESP32 Development Board&#10;DHT22 Sensor&#10;...">ESP32 Development Board
-DHT22 Temperature & Humidity Sensor
-Soil Moisture Sensor
-5V Relay Module
-Water Pump (12V)</textarea>
+                <textarea name="hardware_requirements" id="inputHardware" rows="8" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-green-500" placeholder="ESP32 Development Board&#10;DHT22 Sensor&#10;...">{{ is_array($code->hardware_requirements) ? implode("\n", $code->hardware_requirements) : '' }}</textarea>
                 <p class="text-xs text-gray-500 mt-1">Each line will become a bullet point</p>
             </div>
             <div class="flex justify-end gap-3 pt-4 border-t">
                 <button type="button" onclick="closeHardwareModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="saveHardware()" class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg">Save</button>
+                <button type="submit" class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg">Save</button>
             </div>
         </form>
     </div>
@@ -310,19 +265,16 @@ Water Pump (12V)</textarea>
                 </svg>
             </button>
         </div>
-        <form class="p-6 space-y-4">
+        <form id="softwareForm" class="p-6 space-y-4">
+            @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Software List (one per line)</label>
-                <textarea id="inputSoftware" rows="8" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Arduino IDE&#10;Python Flask&#10;...">Arduino IDE / PlatformIO
-Python Flask (Backend)
-MySQL Database
-React.js (Dashboard)
-MQTT Protocol</textarea>
+                <textarea name="software_stack" id="inputSoftware" rows="8" class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-purple-500" placeholder="Arduino IDE&#10;Python Flask&#10;...">{{ is_array($code->software_stack) ? implode("\n", $code->software_stack) : '' }}</textarea>
                 <p class="text-xs text-gray-500 mt-1">Each line will become a bullet point</p>
             </div>
             <div class="flex justify-end gap-3 pt-4 border-t">
                 <button type="button" onclick="closeSoftwareModal()" class="px-6 py-2.5 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg">Cancel</button>
-                <button type="button" onclick="saveSoftware()" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Save</button>
+                <button type="submit" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">Save</button>
             </div>
         </form>
     </div>
@@ -330,9 +282,6 @@ MQTT Protocol</textarea>
 
 <script>
 // Modal Functions
-function openHeadingModal() { document.getElementById('headingModal').classList.remove('hidden'); }
-function closeHeadingModal() { document.getElementById('headingModal').classList.add('hidden'); }
-
 function openArduinoModal() { document.getElementById('arduinoModal').classList.remove('hidden'); }
 function closeArduinoModal() { document.getElementById('arduinoModal').classList.add('hidden'); }
 
@@ -348,78 +297,183 @@ function closeHardwareModal() { document.getElementById('hardwareModal').classLi
 function openSoftwareModal() { document.getElementById('softwareModal').classList.remove('hidden'); }
 function closeSoftwareModal() { document.getElementById('softwareModal').classList.add('hidden'); }
 
-// Save Functions
-function saveHeading() {
-    const title = document.getElementById('inputHeadingTitle').value;
-    const subtitle = document.getElementById('inputHeadingSubtitle').value;
-    
-    document.getElementById('headingTitle').textContent = title;
-    document.getElementById('headingSubtitle').textContent = subtitle;
-    
-    closeHeadingModal();
-    showNotification('Heading updated!');
-}
-
-function saveArduino() {
-    const code = document.getElementById('inputArduinoCode').value;
-    const preview = code.substring(0, 100) + '...';
-    document.getElementById('arduinoCodePreview').textContent = preview;
-    
-    closeArduinoModal();
-    showNotification('Arduino code updated!');
-}
-
-function savePython() {
-    const code = document.getElementById('inputPythonCode').value;
-    const preview = code.substring(0, 80) + '...';
-    document.getElementById('pythonCodePreview').textContent = preview;
-    
-    closePythonModal();
-    showNotification('Python code updated!');
-}
-
-function saveGithub() {
-    const url = document.getElementById('inputGithubUrl').value;
-    document.getElementById('githubLink').href = url;
-    document.getElementById('githubUrlText').textContent = url;
-    
-    closeGithubModal();
-    showNotification('GitHub link updated!');
-}
-
-function saveHardware() {
-    const text = document.getElementById('inputHardware').value;
-    const lines = text.split('\n').filter(line => line.trim() !== '');
-    const html = lines.map(line => `<li>• ${line.trim()}</li>`).join('');
-    document.getElementById('hardwareList').innerHTML = html;
-    
-    closeHardwareModal();
-    showNotification('Hardware requirements updated!');
-}
-
-function saveSoftware() {
-    const text = document.getElementById('inputSoftware').value;
-    const lines = text.split('\n').filter(line => line.trim() !== '');
-    const html = lines.map(line => `<li>• ${line.trim()}</li>`).join('');
-    document.getElementById('softwareList').innerHTML = html;
-    
-    closeSoftwareModal();
-    showNotification('Software stack updated!');
-}
-
 // Notification
-function showNotification(message) {
-    const notif = document.createElement('div');
-    notif.className = 'fixed top-4 right-4 px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg z-50';
-    notif.textContent = message;
-    document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 3000);
+function showNotification(message, type = 'success') {
+    const alertContainer = document.getElementById('alertContainer');
+    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+
+    const alert = document.createElement('div');
+    alert.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg mb-4`;
+    alert.textContent = message;
+
+    alertContainer.appendChild(alert);
+    setTimeout(() => alert.remove(), 3000);
 }
+
+// AJAX Form Submission
+document.getElementById('arduinoForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('{{ route("code.arduino.update") }}', {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                arduino_code: formData.get('arduino_code')
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message);
+            closeArduinoModal();
+            // Update preview
+            const code = formData.get('arduino_code');
+            document.getElementById('arduinoCodePreview').textContent = code.substring(0, 150) + (code.length > 150 ? '...' : '');
+        }
+    } catch (error) {
+        showNotification('Failed to update Arduino code', 'error');
+    }
+});
+
+document.getElementById('pythonForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('{{ route("code.python.update") }}', {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                python_code: formData.get('python_code')
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message);
+            closePythonModal();
+            // Update preview
+            const code = formData.get('python_code');
+            document.getElementById('pythonCodePreview').textContent = code.substring(0, 150) + (code.length > 150 ? '...' : '');
+        }
+    } catch (error) {
+        showNotification('Failed to update Python code', 'error');
+    }
+});
+
+document.getElementById('githubForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('{{ route("code.github.update") }}', {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                github_url: formData.get('github_url')
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message);
+            closeGithubModal();
+            // Update link
+            const url = formData.get('github_url');
+            document.getElementById('githubLink').href = url;
+            document.getElementById('githubUrlText').textContent = url;
+        }
+    } catch (error) {
+        showNotification('Failed to update GitHub URL', 'error');
+    }
+});
+
+document.getElementById('hardwareForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('{{ route("code.hardware.update") }}', {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                hardware_requirements: formData.get('hardware_requirements')
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message);
+            closeHardwareModal();
+            // Update list
+            const text = formData.get('hardware_requirements');
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            const html = lines.map(line => `<li>• ${line.trim()}</li>`).join('');
+            document.getElementById('hardwareList').innerHTML = html || '<li class="text-gray-400">No hardware requirements set</li>';
+        }
+    } catch (error) {
+        showNotification('Failed to update hardware requirements', 'error');
+    }
+});
+
+document.getElementById('softwareForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('{{ route("code.software.update") }}', {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                software_stack: formData.get('software_stack')
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message);
+            closeSoftwareModal();
+            // Update list
+            const text = formData.get('software_stack');
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            const html = lines.map(line => `<li>• ${line.trim()}</li>`).join('');
+            document.getElementById('softwareList').innerHTML = html || '<li class="text-gray-400">No software stack set</li>';
+        }
+    } catch (error) {
+        showNotification('Failed to update software stack', 'error');
+    }
+});
 
 // Close on ESC
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        closeHeadingModal();
         closeArduinoModal();
         closePythonModal();
         closeGithubModal();

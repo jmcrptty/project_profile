@@ -22,3 +22,10 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Ignore large files and vendor libraries
+/public/img/src/
+/public/img/AdminLTE*/
+*.kcb
+*.zip
+*.rar

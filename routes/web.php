@@ -127,10 +127,12 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     });
 
      Route::prefix('dashboard/code')->middleware('auth')->name('code.')->group(function () {
-    Route::get('/', function () {
-        return view('dashboard.code');
-    })->name('index');
-
+    Route::get('/', [\App\Http\Controllers\CodeController::class, 'index'])->name('index');
+    Route::put('/arduino', [\App\Http\Controllers\CodeController::class, 'updateArduino'])->name('arduino.update');
+    Route::put('/python', [\App\Http\Controllers\CodeController::class, 'updatePython'])->name('python.update');
+    Route::put('/github', [\App\Http\Controllers\CodeController::class, 'updateGithub'])->name('github.update');
+    Route::put('/hardware', [\App\Http\Controllers\CodeController::class, 'updateHardware'])->name('hardware.update');
+    Route::put('/software', [\App\Http\Controllers\CodeController::class, 'updateSoftware'])->name('software.update');
     });
 Route::prefix('dashboard/contact')->middleware('auth')->name('contact.')->group(function () {
     Route::get('/', [ContactController::class, 'index'])->name('index');
