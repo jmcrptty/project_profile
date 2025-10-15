@@ -35,25 +35,31 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard.main');
     })->name('dashboard');
 
-    // About Section Management (View Only - No Controller)
+    // About Section Management
     Route::prefix('dashboard/about')->name('about.')->group(function () {
-        
-        // Index - Overview/Preview About Section
-        Route::get('/', function () {
-            return view('dashboard.about');
-        })->name('index');
-        
-        // // Edit - Form untuk edit About Section
-        // Route::get('/edit', function () {
-        //     return view('dashboard.about.edit');
-        // })->name('edit');
-        
-        // // Update - Proses update (nanti bisa ditambahkan logic)
-        // Route::put('/update', function () {
-        //     // Nanti tambahkan logic untuk save ke database
-        //     return redirect()->route('about.index')
-        //         ->with('success', 'About section updated successfully!');
-        // })->name('update');
+        Route::get('/', [\App\Http\Controllers\AboutController::class, 'edit'])->name('index');
+    });
+
+    // Admin About Routes
+    Route::prefix('admin/about')->name('admin.about.')->middleware('auth')->group(function () {
+        // Background
+        Route::put('/background', [\App\Http\Controllers\AboutController::class, 'updateBackground'])->name('background.update');
+
+        // Goals
+        Route::put('/goals', [\App\Http\Controllers\AboutController::class, 'updateGoals'])->name('goals.update');
+
+        // Dosen
+        Route::post('/dosen', [\App\Http\Controllers\AboutController::class, 'storeDosen'])->name('dosen.store');
+        Route::put('/dosen/{id}', [\App\Http\Controllers\AboutController::class, 'updateDosen'])->name('dosen.update');
+        Route::delete('/dosen/{id}', [\App\Http\Controllers\AboutController::class, 'destroyDosen'])->name('dosen.destroy');
+
+        // Mahasiswa
+        Route::post('/mahasiswa', [\App\Http\Controllers\AboutController::class, 'storeMahasiswa'])->name('mahasiswa.store');
+        Route::put('/mahasiswa/{id}', [\App\Http\Controllers\AboutController::class, 'updateMahasiswa'])->name('mahasiswa.update');
+        Route::delete('/mahasiswa/{id}', [\App\Http\Controllers\AboutController::class, 'destroyMahasiswa'])->name('mahasiswa.destroy');
+
+        // Mitra
+        Route::put('/mitra', [\App\Http\Controllers\AboutController::class, 'updateMitra'])->name('mitra.update');
     });
 
     // Hero Section Management
