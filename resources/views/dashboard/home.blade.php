@@ -56,74 +56,7 @@
         @endphp
 
         {{-- Preview Card dengan Data --}}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-            <div class="aspect-video bg-gray-900 relative overflow-hidden">
-                @if($home && $home->media_type === 'video' && $home->video_url)
-                    @php
-                        $isYouTube = strpos($home->video_url, 'youtube.com/embed/') !== false || 
-                                     strpos($home->video_url, 'youtube.com/watch') !== false || 
-                                     strpos($home->video_url, 'youtu.be') !== false;
-                    @endphp
-                    
-                    @if($isYouTube)
-                        {{-- YouTube Embed --}}
-                        <iframe 
-                            src="{{ $home->video_url }}" 
-                            class="w-full h-full" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    @else
-                        {{-- Regular Video MP4 --}}
-                        <video autoplay muted loop playsinline class="w-full h-full object-cover">
-                            <source src="{{ $home->video_url }}" type="video/mp4">
-                        </video>
-                    @endif
-                    
-                    <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-2">
-                        <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                        <span class="text-white text-xs font-medium">{{ $isYouTube ? 'YouTube Video' : 'Video Background' }}</span>
-                    </div>
-                @elseif($home && $home->media_type === 'images' && $home->images && count($home->images) > 0)
-                    <div id="imageSlider" class="w-full h-full relative">
-                        @foreach($home->images as $index => $image)
-                        <img src="{{ asset('storage/' . $image) }}" 
-                             alt="Slide {{ $index + 1 }}" 
-                             class="slider-image w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
-                        @endforeach
-                    </div>
-                    <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-2">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        <span class="text-white text-xs font-medium">{{ count($home->images) }} Gambar</span>
-                    </div>
-                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                        @foreach($home->images as $index => $image)
-                        <div class="slider-dot w-2 h-2 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white/40' }} transition-all"></div>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="w-full h-full flex items-center justify-center text-gray-500">
-                        <div class="text-center">
-                            <svg class="w-20 h-20 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            <p class="text-sm">Belum ada media</p>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
-                
-                <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-                    <p class="text-sm tracking-wider uppercase mb-2 opacity-80">{{ $home->subtitle ?? 'Subtitle belum diisi' }}</p>
-                    <h1 class="text-3xl font-light mb-2">{{ $home->title ?? 'Title belum diisi' }}</h1>
-                    <p class="text-sm opacity-90">{{ $home ? Str::limit($home->description, 100) : 'Description belum diisi' }}</p>
-                </div>
-            </div>
-        </div>
+       
 
         {{-- 1. Media Section dengan Preview --}}
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-4">

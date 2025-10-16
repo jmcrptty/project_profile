@@ -5,15 +5,17 @@
       
       <!-- Brand & Description -->
       <div>
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"/>
-            </svg>
+        <div class="flex flex-col gap-3 mb-4">
+          <!-- Logos -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-8 md:h-10 w-auto object-contain">
+            <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-8 md:h-10 w-auto object-contain">
+            <img src="{{ asset('img/Project.png') }}" alt="Proyek" class="h-8 md:h-10 w-auto object-contain">
+            <img src="{{ asset('img/logo_musamus.png') }}" alt="Universitas" class="h-8 md:h-10 w-auto object-contain">
           </div>
-          <span class="font-semibold text-lg">AGRITECH IoT</span>
+          <span class="font-semibold text-base md:text-lg">Fun Coding with Mini Simulator</span>
         </div>
-        <p class="text-gray-400 text-sm">Meningkatkan produktivitas pertanian dengan teknologi IoT modern</p>
+        <p class="text-gray-400 text-sm">Platform pembelajaran coding interaktif dengan simulator mini untuk mahasiswa</p>
       </div>
       
       <!-- Quick Links -->
@@ -52,8 +54,9 @@
     </div>
     
     <!-- Copyright -->
-    <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-      <p>&copy; <span id="currentYear"></span> AgriTech IoT Project. All rights reserved. | Universitas Teknologi Nusantara</p>
+    <div class="border-t border-gray-800 pt-8 text-center text-xs md:text-sm text-gray-400">
+      <p>&copy; <span id="currentYear"></span> Fun Coding with Mini Simulator. All rights reserved.</p>
+      <p class="mt-1">Universitas Musamus Merauke - Fakultas Teknik</p>
     </div>
   </div>
 </footer>

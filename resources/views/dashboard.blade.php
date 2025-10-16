@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - AgriTech IoT Admin</title>
+    <title>Dashboard - Fun Coding with Mini Simulator</title>
+    <link rel="icon" type="image/x-icon" href="/img/Logo_project.ico" style="width: 120px; height: 120px;">
+
+    {{-- Tailwind CSS CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
     {{-- tambahan fitur autocrop --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">

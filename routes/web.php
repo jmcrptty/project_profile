@@ -29,10 +29,37 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    
+
     // Main Dashboard
     Route::get('/dashboard', function () {
-        return view('dashboard.main');
+        // Get gallery photos (latest 4)
+        $galleryPhotos = \App\Models\FotoGaleri::latest()->take(4)->get();
+
+        // Get dosen (latest 4)
+        $dosens = \App\Models\About::dosen()->take(4)->get();
+
+        // Get mahasiswa (latest 4)
+        $mahasiswas = \App\Models\About::mahasiswa()->take(4)->get();
+
+        // Get mitra (latest 4)
+        $mitras = \App\Models\About::mitra()->take(4)->get();
+
+        // Total counts
+        $totalGalleryPhotos = \App\Models\FotoGaleri::count();
+        $totalDosens = \App\Models\About::dosen()->count();
+        $totalMahasiswas = \App\Models\About::mahasiswa()->count();
+        $totalMitras = \App\Models\About::mitra()->count();
+
+        return view('dashboard.main', compact(
+            'galleryPhotos',
+            'dosens',
+            'mahasiswas',
+            'mitras',
+            'totalGalleryPhotos',
+            'totalDosens',
+            'totalMahasiswas',
+            'totalMitras'
+        ));
     })->name('dashboard');
 
     // About Section Management
