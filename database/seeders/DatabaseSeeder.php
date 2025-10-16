@@ -29,5 +29,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FotoGaleriSeeder::class,
         ]);
+
+        $this->call([
+            VideoGaleriSeeder::class
+        ]);
     }
 }

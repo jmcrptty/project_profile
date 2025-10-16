@@ -1,14 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+
+
 use App\Http\Controllers\FotoGaleriController;
-
-
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VideoGaleriController;
 
 Route::get('/', function () {
     return view('main');
@@ -111,11 +112,12 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
 
         Route::get('/', [GaleriController::class, 'index'])->name('index');
-
-        // resource controller galeri foto
+        
         Route::resource('foto-galeri', FotoGaleriController::class)->except([
             'create', 'store', 'show', 'edit', 'destroy'
         ]);
+
+        Route::resource('videogaleri', VideoGaleriController::class)->except(['create', 'store', 'destroy']);
     });
 
 
