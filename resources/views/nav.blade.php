@@ -4,14 +4,14 @@
     <div class="flex items-center justify-between">
       
       <!-- Logo -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 md:gap-3 flex-1 md:flex-initial overflow-hidden">
         <!-- 3 Logo Sejajar -->
-        <div class="flex items-center gap-2">
-          <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-10 w-auto object-contain">
-          <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-10 w-auto object-contain">
-          <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-10 w-auto object-contain">
+        <div class="flex items-center gap-1 md:gap-2 flex-shrink-0">
+          <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-8 md:h-10 w-auto object-contain">
+          <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-8 md:h-10 w-auto object-contain">
+          <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-8 md:h-10 w-auto object-contain">
         </div>
-        <span class="text-gray-800 logo-text font-semibold text-lg tracking-wide">Fun Coding Mini Simulator</span>
+        <span class="text-gray-800 logo-text font-semibold text-sm md:text-lg tracking-wide truncate">Fun Coding Mini Simulator</span>
       </div>
 
       <!-- Desktop Menu -->

@@ -310,7 +310,16 @@
 
       function setupCarousels() {
         const cardWidth = 280 + 24; // card width + gap
-        const visibleCards = 3;
+
+        // Responsive visible cards
+        function getVisibleCards() {
+          const width = window.innerWidth;
+          if (width < 640) return 1; // mobile
+          if (width < 1024) return 2; // tablet
+          return 3; // desktop
+        }
+
+        let visibleCards = getVisibleCards();
 
         // Carousel Tim Dosen
         const trackDosen = document.getElementById('carouselTrackDosen');
@@ -383,6 +392,31 @@
 
           updateCarouselMahasiswa();
         }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          visibleCards = getVisibleCards();
+          if (trackDosen) {
+            const maxIndexDosen = Math.max(0, trackDosen.children.length - visibleCards);
+            currentIndexDosen = Math.min(currentIndexDosen, maxIndexDosen);
+            const offset = -currentIndexDosen * cardWidth;
+            trackDosen.style.transform = `translateX(${offset}px)`;
+            prevBtnDosen.disabled = currentIndexDosen === 0;
+            nextBtnDosen.disabled = currentIndexDosen === maxIndexDosen;
+            prevBtnDosen.style.opacity = currentIndexDosen === 0 ? '0.3' : '1';
+            nextBtnDosen.style.opacity = currentIndexDosen === maxIndexDosen ? '0.3' : '1';
+          }
+          if (trackMahasiswa) {
+            const maxIndexMahasiswa = Math.max(0, trackMahasiswa.children.length - visibleCards);
+            currentIndexMahasiswa = Math.min(currentIndexMahasiswa, maxIndexMahasiswa);
+            const offset = -currentIndexMahasiswa * cardWidth;
+            trackMahasiswa.style.transform = `translateX(${offset}px)`;
+            prevBtnMahasiswa.disabled = currentIndexMahasiswa === 0;
+            nextBtnMahasiswa.disabled = currentIndexMahasiswa === maxIndexMahasiswa;
+            prevBtnMahasiswa.style.opacity = currentIndexMahasiswa === 0 ? '0.3' : '1';
+            nextBtnMahasiswa.style.opacity = currentIndexMahasiswa === maxIndexMahasiswa ? '0.3' : '1';
+          }
+        });
       }
     }
   })();

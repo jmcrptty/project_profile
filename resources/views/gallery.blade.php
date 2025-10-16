@@ -15,9 +15,9 @@
 
       <div class="overflow-hidden">
         @if($photos->isNotEmpty())
-          <div id="galleryTrack" class="flex gap-6 transition-transform duration-500 ease-out">
+          <div id="galleryTrack" class="flex gap-4 md:gap-6 transition-transform duration-500 ease-out">
               @foreach($photos as $photo)
-                  <div class="min-w-[calc(33.333%-16px)] gallery-item relative aspect-[1280/853] bg-gray-200 rounded-2xl overflow-hidden animate-on-scroll fade-in-up">
+                  <div class="min-w-[calc(100%-16px)] sm:min-w-[calc(50%-12px)] md:min-w-[calc(33.333%-16px)] gallery-item relative aspect-[1280/853] bg-gray-200 rounded-2xl overflow-hidden animate-on-scroll fade-in-up flex-shrink-0">
                       <img src="{{ $photo->image_url }}" alt="{{ $photo->deskripsi }}" class="object-cover w-full h-full">
                       <div class="absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/50 to-transparent">
                           <p class="text-sm text-white">{{ $photo->deskripsi }}</p>
@@ -75,7 +75,8 @@
         let galleryIndex = 0;
         
         function getGalleryCardWidth() {
-            return galleryItems[0].offsetWidth + 24; 
+            const gap = window.innerWidth < 768 ? 16 : 24; // 4 (md:6) * 4px
+            return galleryItems[0].offsetWidth + gap;
         }
         
         function updateGalleryCarousel() {
