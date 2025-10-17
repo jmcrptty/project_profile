@@ -60,7 +60,6 @@ class FotoGaleriController extends Controller
     public function update(UpdateFotoGaleriRequest $request, FotoGaleri $fotoGaleri)
     {
         try {
-            // new image inputted
             if ($request->filled('cropped_image_data')) {
                 
                 $imageData = $request->input('cropped_image_data');

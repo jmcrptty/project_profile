@@ -11,7 +11,7 @@ class UpdateVideoGaleriRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateVideoGaleriRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'youtube_url' => 'required|url',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
         ];
     }
 }

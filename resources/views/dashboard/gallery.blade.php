@@ -78,9 +78,6 @@
                     <h3 class="text-lg font-semibold text-gray-800">Galeri Foto</h3>
                     <p class="mt-1 text-xs text-gray-500">Klik foto untuk edit caption atau hapus</p>
                 </div>
-                {{-- <button onclick="openAddPhotoModal()" class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
-                    Tambah Foto
-                </button> --}}
             </div>
 
             <div class="p-6">
@@ -121,53 +118,42 @@
             </div>
         </div>
 
-        <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
-            <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-purple-50 to-pink-50">
-                <h3 class="text-lg font-semibold text-gray-800">Video Demo</h3>
-                {{-- Pass video data attributes to the button --}}
-                <button 
-                    onclick="openVideoModal(
-                        '{{ $video->youtube_url ?? '' }}', 
-                        '{{ $video->title ?? '' }}', 
-                        '{{ $video->description ?? '' }}'
-                    )" 
-                    class="px-4 py-2 text-sm text-white transition bg-purple-600 rounded-lg hover:bg-purple-700">
-                    Edit Video
-                </button>
-            </div>
+        {{-- Video Demo Section --}}
+        @if($video)
+            <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
+                <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-purple-50 to-pink-50">
+                    <h3 class="text-lg font-semibold text-gray-800">Video Demo</h3>
+                    
+                    <button onclick="openEditVideoModal()" class="px-4 py-2 text-sm text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                        Edit Video
+                    </button>
+                </div>
 
-            <div class="p-6">
-                <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
-                    @if(!empty($video->youtube_url ?? ''))
-                    <iframe 
-                        id="videoPreview"
-                        class="w-full h-full" 
-                        src="{{ $video->youtube_url }}"
-                        title="{{ $video->title ?? 'Demo Video' }}" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen>
-                    </iframe>
-                    @else
-                    <div class="flex items-center justify-center w-full h-full text-gray-500">
-                        <div class="text-center">
-                            <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                            </svg>
-                            <p>Video belum diatur</p>
-                        </div>
+                <div class="p-6">
+                    <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
+                        <iframe 
+                            id="videoPreview"
+                            class="w-full h-full" 
+                            src="{{ $video->embed_url }}" 
+                            title="{{ $video->title }}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
                     </div>
-                    @endif
+                    
+                    <div class="p-4 mt-4 bg-gray-800 rounded-lg">
+                        <h4 class="mb-1 font-semibold text-white">{{ $video->title }}</h4>
+                        <p class="text-sm text-gray-400">{{ $video->description }}</p>
+                    </div>
                 </div>
-                
-                @if(!empty($video->title ?? ''))
-                <div class="p-4 mt-4 bg-gray-800 rounded-lg">
-                    <h4 class="mb-1 font-semibold text-white">{{ $video->title }}</h4>
-                    <p class="text-sm text-gray-400">{{ $video->description }}</p>
-                </div>
-                @endif
             </div>
-        </div>
+        @else
+            {{-- This is a fallback if the video row was somehow deleted from the database. --}}
+            <div class="p-6 text-center text-gray-500 bg-gray-100 border rounded-xl">
+                Video data could not be found. Please run the database seeder.
+            </div>
+        @endif
 
     </div>
 </main>
@@ -242,80 +228,48 @@
     </div>
 </div>
 
+
+
 {{-- Edit Video Modal --}}
-<div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
+<div id="editVideoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
     <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl">
         <div class="flex items-center justify-between px-6 py-4 border-b">
             <h3 class="text-xl font-bold text-gray-800">Edit Video Demo</h3>
-            <button onclick="closeVideoModal()" class="text-gray-400 hover:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+            <button onclick="closeEditVideoModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
 
-        <form action="" method="POST" class="p-6 space-y-4">
-            {{-- @csrf --}}
-            {{-- @method('PUT') --}}
-
+        {{-- The form now has the action and data built-in --}}
+        <form id="editVideoForm" action="{{ route('gallery.videogaleri.update', $video->id ) }}" method="POST" class="p-6 space-y-4">
+            @csrf
+            @method('PUT')
+            
             <div>
-                <label for="videoUrl" class="block mb-2 text-sm font-semibold text-gray-700">
-                    YouTube URL <span class="text-red-500">*</span>
-                </label>
-                <input 
-                    type="url" 
-                    id="videoUrl" 
-                    name="youtube_url"
-                    value="{{ old('youtube_url', $video->youtube_url ?? '') }}"
-                    class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                    placeholder="https://www.youtube.com/watch?v=..."
-                    required
-                >
-                <p class="mt-1 text-xs text-gray-500">Link YouTube (akan otomatis dikonversi ke embed)</p>
+                <label for="videoUrl" class="block mb-2 text-sm font-semibold text-gray-700">YouTube URL <span class="text-red-500">*</span></label>
+                <input type="url" id="videoUrl" name="youtube_url" value="{{ $video->youtube_url }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+            
+            <div>
+                <label for="videoTitle" class="block mb-2 text-sm font-semibold text-gray-700">Judul Video <span class="text-red-500">*</span></label>
+                <input type="text" id="videoTitle" name="title" value="{{ $video->title }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
             </div>
 
             <div>
-                <label for="videoTitle" class="block mb-2 text-sm font-semibold text-gray-700">
-                    Judul Video <span class="text-red-500">*</span>
-                </label>
-                <input 
-                    type="text" 
-                    id="videoTitle" 
-                    name="title"
-                    value="{{ old('title', $video->title ?? '') }}"
-                    class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-purple-500"
-                    placeholder="Demo Project IoT Agriculture"
-                    required
-                >
+                <label for="videoDescription" class="block mb-2 text-sm font-semibold text-gray-700">Deskripsi Video <span class="text-red-500">*</span></label>
+                <textarea id="videoDescription" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg resize-none" required>{{ $video->description }}</textarea>
             </div>
 
-            <div>
-                <label for="videoDescription" class="block mb-2 text-sm font-semibold text-gray-700">
-                    Deskripsi Video <span class="text-red-500">*</span>
-                </label>
-                <textarea 
-                    id="videoDescription" 
-                    name="description"
-                    rows="3"
-                    class="w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-purple-500 resize-none"
-                    placeholder="Deskripsi tentang video..."
-                    required
-                >{{ old('description', $video->description ?? '') }}</textarea>
-            </div>
-
-            <div class="flex justify-end gap-3 pt-4 border-t">
-                <button type="button" onclick="closeVideoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">
-                    Batal
-                </button>
-                <button type="submit" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg">
-                    Simpan Perubahan
-                </button>
+            <div class="flex justify-end gap-3 pt-4 mt-4 border-t">
+                <button type="button" onclick="closeEditVideoModal()" class="px-6 py-2.5 border text-gray-700 rounded-lg">Batal</button>
+                <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg">Simpan Perubahan</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
+
     // 1. Edit Photo Modal
     const editModal = document.getElementById('editPhotoModal');
     const editForm = document.getElementById('editPhotoForm');
@@ -414,31 +368,22 @@
         }
     });
 
-    // ============================================================================
+    // 3. Video Modal Functions
 
-    // 2. Video Modal Functions
-    function openVideoModal(youtubeUrl = '', title = '', description = '') {
-        const videoModal = document.getElementById('videoModal');
-        
-        // Populate the form fields in the modal
-        document.getElementById('videoUrl').value = youtubeUrl;
-        document.getElementById('videoTitle').value = title;
-        document.getElementById('videoDescription').value = description;
-
-        // Show the modal
-        videoModal.classList.remove('hidden');
+    const editVideoModal = document.getElementById('editVideoModal');
+    function openEditVideoModal() {
+        editVideoModal.classList.remove('hidden');
     }
 
-    function closeVideoModal() {
-        document.getElementById('videoModal').classList.add('hidden');
+    function closeEditVideoModal() {
+        editVideoModal.classList.add('hidden');
     }
 
     // Close modals on ESC - perlu kah?
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            // Assuming closePhotoModal and closeEditPhotoModal also exist
-            if (typeof closePhotoModal === 'function') closePhotoModal();
-            if (typeof closeEditPhotoModal === 'function') closeEditPhotoModal();
+            closePhotoModal();
+            closeEditPhotoModal();
             closeVideoModal();
         }
     });

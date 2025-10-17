@@ -15,7 +15,7 @@
 
       <div class="overflow-hidden">
         @if($photos->isNotEmpty())
-          <div id="galleryTrack" class="flex gap-4 md:gap-6 transition-transform duration-500 ease-out">
+          <div id="galleryTrack" class="flex gap-4 transition-transform duration-500 ease-out md:gap-6">
               @foreach($photos as $photo)
                   <div class="min-w-[calc(100%-16px)] sm:min-w-[calc(50%-12px)] md:min-w-[calc(33.333%-16px)] gallery-item relative aspect-[1280/853] bg-gray-200 rounded-2xl overflow-hidden animate-on-scroll fade-in-up flex-shrink-0">
                       <img src="{{ $photo->image_url }}" alt="{{ $photo->deskripsi }}" class="object-cover w-full h-full">
@@ -44,17 +44,18 @@
     <div class="overflow-hidden bg-gray-900 rounded-2xl animate-on-scroll fade-in-up">
       <div class="aspect-video">
         <iframe 
-          class="w-full h-full" 
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-          title="Demo Project IoT Agriculture" 
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-          allowfullscreen>
+            id="videoPreview"
+            class="w-full h-full" 
+            src="{{ $video->embed_url }}" 
+            title="{{ $video->title }}" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
         </iframe>
       </div>
       <div class="p-6 bg-gray-800">
-        <h3 class="mb-2 text-lg font-medium text-white">Demo Project IoT Agriculture</h3>
-        <p class="text-sm text-gray-400">Demonstrasi lengkap sistem monitoring dan kontrol otomatis pertanian menggunakan sensor IoT</p>
+        <h3 class="mb-2 text-lg font-medium text-white">{{ $video->title }}</h3>
+        <p class="text-sm text-gray-400">{{ $video->description }}</p>
       </div>
     </div>
   </div>

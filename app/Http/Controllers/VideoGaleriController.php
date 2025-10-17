@@ -35,7 +35,7 @@ class VideoGaleriController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(VideoGaleri $videoGaleri)
+    public function show(VideoGaleri $videogaleri)
     {
         //
     }
@@ -43,7 +43,7 @@ class VideoGaleriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(VideoGaleri $videoGaleri)
+    public function edit(VideoGaleri $videogaleri)
     {
         return redirect()->route('gallery.index');
     }
@@ -51,7 +51,7 @@ class VideoGaleriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVideoGaleriRequest $request, VideoGaleri $videoGaleri)
+    public function update(UpdateVideoGaleriRequest $request, VideoGaleri $videogaleri)
     {
         $request->validate([
             'youtube_url' => 'required|url',
@@ -59,7 +59,7 @@ class VideoGaleriController extends Controller
             'description' => 'required|string',
         ]);
 
-        $videoGaleri->update([
+        $videogaleri->update([
             'youtube_url' => $request->youtube_url,
             'title' => $request->title,
             'description' => $request->description,
@@ -71,7 +71,7 @@ class VideoGaleriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(VideoGaleri $videoGaleri)
+    public function destroy(VideoGaleri $videogaleri)
     {
         //
     }
