@@ -83,13 +83,10 @@
       </div>
     </form>
 
-    {{-- Register Link --}}
-    @if (Route::has('register'))
-      <p class="mt-8 text-center text-sm text-gray-600">
-        Belum punya akun?
-        <a href="{{ route('register') }}" class="text-blue-700 font-semibold hover:underline">Daftar</a>
-      </p>
-    @endif
+    {{-- Admin Only Note --}}
+    <p class="mt-8 text-center text-xs text-gray-500">
+      Admin access only
+    </p>
   </div>
 
 </body>
