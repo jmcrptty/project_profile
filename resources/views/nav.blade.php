@@ -1,8 +1,8 @@
 {{-- FILE: resources/views/nav.blade.php --}}
-<nav id="navbar" class="fixed w-full z-50 nav-blur border-b border-white/10 transition-all duration-300">
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-6 py-4">
     <div class="flex items-center justify-between">
-      
+
       <!-- Logo -->
       <div class="flex items-center gap-2 md:gap-3 flex-1 md:flex-initial overflow-hidden">
         <!-- 3 Logo Sejajar -->
@@ -11,20 +11,20 @@
           <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-8 md:h-10 w-auto object-contain">
           <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-8 md:h-10 w-auto object-contain">
         </div>
-        <span class="text-gray-800 logo-text font-semibold text-sm md:text-lg tracking-wide truncate">Fun Coding Mini Simulator</span>
+        <span id="navbarText" class="logo-text heading-font font-semibold text-sm md:text-lg tracking-wide truncate transition-colors duration-300 text-white">Fun Coding Mini Simulator</span>
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:flex items-center gap-8 text-gray-800 text-sm">
-        <a href="#home" class="hover:text-gray-600 transition">Beranda</a>
-        <a href="#about" class="hover:text-gray-600 transition">Tentang</a>
-        <a href="#gallery" class="hover:text-gray-600 transition">Galeri</a>
-        <a href="#code" class="hover:text-gray-600 transition">Kode Project</a>
-        <a href="#contact" class="hover:text-gray-600 transition">Kontak</a>
+      <div id="navbarMenu" class="hidden md:flex items-center gap-8 text-sm font-medium transition-colors duration-300 text-white">
+        <a href="#home" class="nav-link transition">Beranda</a>
+        <a href="#about" class="nav-link transition">Tentang</a>
+        <a href="#gallery" class="nav-link transition">Galeri</a>
+        <a href="#code" class="nav-link transition">Kode Project</a>
+        <a href="#contact" class="nav-link transition">Kontak</a>
       </div>
 
       <!-- Mobile Menu Button -->
-      <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg transition nav-mobile-btn text-white">
         <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -36,25 +36,83 @@
 
     <!-- Mobile Menu Dropdown -->
     <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
-      <div class="flex flex-col space-y-3 text-gray-800 text-sm">
-        <a href="#home" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Beranda</a>
-        <a href="#about" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Tentang</a>
-        <a href="#gallery" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Galeri</a>
-        <a href="#code" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Kode Project</a>
-        <a href="#contact" class="hover:text-gray-600 transition py-2 px-4 hover:bg-gray-100 rounded-lg">Kontak</a>
+      <div class="flex flex-col space-y-3 text-sm font-medium">
+        <a href="#home" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Beranda</a>
+        <a href="#about" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Tentang</a>
+        <a href="#gallery" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Galeri</a>
+        <a href="#code" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Kode Project</a>
+        <a href="#contact" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Kontak</a>
       </div>
     </div>
   </div>
 </nav>
 
-{{-- Script khusus untuk Navbar (Mobile Menu Toggle) --}}
+{{-- Script khusus untuk Navbar (Mobile Menu Toggle & Scroll Effect) --}}
 <script>
-  // Mobile Menu Toggle
+  // Navbar Elements
+  const navbar = document.getElementById('navbar');
+  const navbarText = document.getElementById('navbarText');
+  const navbarMenu = document.getElementById('navbarMenu');
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   const menuIcon = document.getElementById('menuIcon');
   const closeIcon = document.getElementById('closeIcon');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinksMobile = document.querySelectorAll('.nav-link-mobile');
 
+  // Scroll Effect - Change navbar color
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      // Scrolled - Gray-900 background (same as footer) with white text
+      navbar.classList.add('bg-gray-900', 'border-b', 'border-gray-800', 'shadow-lg');
+      navbar.classList.remove('bg-transparent');
+
+      navbarText.classList.remove('text-white');
+      navbarText.classList.add('text-white');
+
+      navbarMenu.classList.remove('text-white');
+      navbarMenu.classList.add('text-white');
+
+      mobileMenuBtn.classList.remove('text-white', 'hover:bg-white/10');
+      mobileMenuBtn.classList.add('text-white', 'hover:bg-gray-800');
+
+      navLinks.forEach(link => {
+        link.classList.remove('hover:text-gray-300');
+        link.classList.add('hover:text-gray-400');
+      });
+
+      navLinksMobile.forEach(link => {
+        link.classList.remove('text-white', 'hover:bg-white/10');
+        link.classList.add('text-white', 'hover:bg-gray-800');
+      });
+
+    } else {
+      // Top - Transparent background with white text
+      navbar.classList.remove('bg-gray-900', 'border-b', 'border-gray-800', 'shadow-lg');
+      navbar.classList.add('bg-transparent');
+
+      navbarText.classList.remove('text-white');
+      navbarText.classList.add('text-white');
+
+      navbarMenu.classList.remove('text-white');
+      navbarMenu.classList.add('text-white');
+
+      mobileMenuBtn.classList.remove('text-white', 'hover:bg-gray-800');
+      mobileMenuBtn.classList.add('text-white', 'hover:bg-white/10');
+
+      navLinks.forEach(link => {
+        link.classList.remove('hover:text-gray-400');
+        link.classList.add('hover:text-gray-300');
+      });
+
+      navLinksMobile.forEach(link => {
+        link.classList.remove('text-white', 'hover:bg-gray-800');
+        link.classList.add('text-white', 'hover:bg-white/10');
+      });
+    }
+  });
+
+  // Mobile Menu Toggle
   mobileMenuBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('hidden');
     menuIcon.classList.toggle('hidden');
