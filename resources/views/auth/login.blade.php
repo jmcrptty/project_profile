@@ -22,9 +22,9 @@
     {{-- Logo / Judul --}}
     <div class="text-center mb-8">
       <div class="flex items-center justify-center gap-2 mb-3">
-        <img src="{{ asset('images/bima1.png') }}" alt="Bima 1" class="h-10 w-auto object-contain">
-        <img src="{{ asset('images/bima2.png') }}" alt="Bima 2" class="h-10 w-auto object-contain">
-        <img src="{{ asset('images/proyek.png') }}" alt="Proyek" class="h-10 w-auto object-contain">
+        <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-10 w-auto object-contain">
+        <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-10 w-auto object-contain">
+        <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-10 w-auto object-contain">
       </div>
       <h1 class="text-2xl font-bold text-gray-800">Fun Coding with Mini Simulator</h1>
       <p class="text-gray-500 text-sm">Masuk ke akun Anda untuk melanjutkan</p>
