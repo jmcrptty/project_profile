@@ -10,7 +10,7 @@
             </button>
             <div>
                 <h1 class="text-xl font-bold text-white">Dashboard</h1>
-                <p class="text-sm text-gray-400" id="currentTime">Loading...</p>
+                
             </div>
         </div>
 

@@ -35,13 +35,13 @@
     </div>
 
     <!-- Mobile Menu Dropdown -->
-    <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
-      <div class="flex flex-col space-y-3 text-sm font-medium">
-        <a href="#home" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Beranda</a>
-        <a href="#about" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Tentang</a>
-        <a href="#gallery" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Galeri</a>
-        <a href="#code" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Kode Project</a>
-        <a href="#contact" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white">Kontak</a>
+    <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 bg-gray-900 rounded-lg">
+      <div class="flex flex-col space-y-3 text-sm font-medium p-4">
+        <a href="#home" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white hover:bg-gray-800">Beranda</a>
+        <a href="#about" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white hover:bg-gray-800">Tentang</a>
+        <a href="#gallery" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white hover:bg-gray-800">Galeri</a>
+        <a href="#code" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white hover:bg-gray-800">Kode Project</a>
+        <a href="#contact" class="nav-link-mobile transition py-2 px-4 rounded-lg text-white hover:bg-gray-800">Kontak</a>
       </div>
     </div>
   </div>
@@ -60,55 +60,16 @@
   const navLinks = document.querySelectorAll('.nav-link');
   const navLinksMobile = document.querySelectorAll('.nav-link-mobile');
 
-  // Scroll Effect - Change navbar color
+  // Scroll Effect - Change navbar background only
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
-      // Scrolled - Gray-900 background (same as footer) with white text
+      // Scrolled - Gray-900 background
       navbar.classList.add('bg-gray-900', 'border-b', 'border-gray-800', 'shadow-lg');
       navbar.classList.remove('bg-transparent');
-
-      navbarText.classList.remove('text-white');
-      navbarText.classList.add('text-white');
-
-      navbarMenu.classList.remove('text-white');
-      navbarMenu.classList.add('text-white');
-
-      mobileMenuBtn.classList.remove('text-white', 'hover:bg-white/10');
-      mobileMenuBtn.classList.add('text-white', 'hover:bg-gray-800');
-
-      navLinks.forEach(link => {
-        link.classList.remove('hover:text-gray-300');
-        link.classList.add('hover:text-gray-400');
-      });
-
-      navLinksMobile.forEach(link => {
-        link.classList.remove('text-white', 'hover:bg-white/10');
-        link.classList.add('text-white', 'hover:bg-gray-800');
-      });
-
     } else {
-      // Top - Transparent background with white text
+      // Top - Transparent background
       navbar.classList.remove('bg-gray-900', 'border-b', 'border-gray-800', 'shadow-lg');
       navbar.classList.add('bg-transparent');
-
-      navbarText.classList.remove('text-white');
-      navbarText.classList.add('text-white');
-
-      navbarMenu.classList.remove('text-white');
-      navbarMenu.classList.add('text-white');
-
-      mobileMenuBtn.classList.remove('text-white', 'hover:bg-gray-800');
-      mobileMenuBtn.classList.add('text-white', 'hover:bg-white/10');
-
-      navLinks.forEach(link => {
-        link.classList.remove('hover:text-gray-400');
-        link.classList.add('hover:text-gray-300');
-      });
-
-      navLinksMobile.forEach(link => {
-        link.classList.remove('text-white', 'hover:bg-gray-800');
-        link.classList.add('text-white', 'hover:bg-white/10');
-      });
     }
   });
 

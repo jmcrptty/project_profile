@@ -10,7 +10,7 @@
           <div class="flex items-center gap-2 flex-wrap">
             <img src="{{ asset('img/Bima1.png') }}" alt="Bima 1" class="h-8 md:h-10 w-auto object-contain">
             <img src="{{ asset('img/Bima2.png') }}" alt="Bima 2" class="h-8 md:h-10 w-auto object-contain">
-            <img src="{{ asset('img/Project.png') }}" alt="Proyek" class="h-8 md:h-10 w-auto object-contain">
+            <img src="{{ asset('img/project.png') }}" alt="Proyek" class="h-8 md:h-10 w-auto object-contain">
             <img src="{{ asset('img/logo_musamus.png') }}" alt="Universitas" class="h-8 md:h-10 w-auto object-contain">
           </div>
           <span class="font-semibold text-base md:text-lg">Fun Coding with Mini Simulator</span>
