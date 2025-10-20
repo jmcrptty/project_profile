@@ -56,44 +56,55 @@ class FotoGaleriController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * Ukuran foto yang dihasilkan: 1280x853px (aspect ratio 1280/853) sesuai dengan tampilan frontend
      */
     public function update(UpdateFotoGaleriRequest $request, FotoGaleri $fotoGaleri)
     {
         try {
+            // Proses update foto jika ada cropped image data
             if ($request->filled('cropped_image_data')) {
-                
+
                 $imageData = $request->input('cropped_image_data');
-                
+
+                // Validasi format data URI base64
                 if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
                     $imageData = substr($imageData, strpos($imageData, ',') + 1);
                     $type = strtolower($type[1]);
 
+                    // Validasi tipe gambar yang diizinkan
                     if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
-                        throw new \Exception('Tipe gambar tidak valid.');
+                        throw new \Exception('Tipe gambar tidak valid. Hanya jpg, jpeg, gif, dan png yang diizinkan.');
                     }
+
+                    // Decode base64
                     $imageData = base64_decode($imageData);
                     if ($imageData === false) {
                         throw new \Exception('Gagal mendekode data base64.');
                     }
                 } else {
-                    throw new \Exception('Data URI tidak sesuai format.');
+                    throw new \Exception('Data URI tidak sesuai format yang diharapkan.');
                 }
-                
-                // hapus foto lama
+
+                // Hapus foto lama jika ada
                 if ($fotoGaleri->foto_file && Storage::disk('public')->exists($fotoGaleri->foto_file)) {
                     Storage::disk('public')->delete($fotoGaleri->foto_file);
                 }
 
+                // Generate nama file unik dan simpan
+                // Format: galeriFoto/[random40chars].jpg
                 $newFileName = 'galeriFoto/' . Str::random(40) . '.' . $type;
 
+                // Simpan ke storage/app/public/galeriFoto/
                 Storage::disk('public')->put($newFileName, $imageData);
 
+                // Update path file di database
                 $fotoGaleri->foto_file = $newFileName;
             }
 
-            // update caption
+            // Update caption/deskripsi foto
             $fotoGaleri->deskripsi = $request->caption;
 
+            // Simpan perubahan ke database
             $fotoGaleri->save();
 
             return back()->with('success-foto', 'Foto berhasil diperbarui!');

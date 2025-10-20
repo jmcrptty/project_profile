@@ -90,13 +90,13 @@
                             <div class="absolute bottom-0 left-0 right-0 p-3">
                                 <p class="mb-2 text-sm font-medium text-white line-clamp-2">{{ $photo->deskripsi }}</p>
                                 <div class="flex gap-2">
-                                    <button 
+                                    <button
                                         onclick="openEditPhotoModal(
-                                            {{ $photo->id }}, 
-                                            '{{ $photo->foto_file ? Storage::url($photo->foto_file) : '' }}', 
-                                            '{{ addslashes($photo->deskripsi) }}', 
+                                            {{ $photo->id }},
+                                            '{{ $photo->image_url }}',
+                                            '{{ addslashes($photo->deskripsi) }}',
                                             '{{ route('gallery.foto-galeri.update', $photo->id) }}'
-                                        )" 
+                                        )"
                                         class="w-full px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs rounded transition">
                                         Edit
                                     </button>
