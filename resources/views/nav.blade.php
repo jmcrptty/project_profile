@@ -16,7 +16,7 @@
 
       <!-- Desktop Menu -->
       <div id="navbarMenu" class="hidden md:flex items-center gap-8 text-sm font-medium transition-colors duration-300 text-white">
-        <a href="#home" class="nav-link transition">Beranda</a>
+        <a href="#home" class="nav-link transition">Beranda1</a>
         <a href="#about" class="nav-link transition">Tentang</a>
         <a href="#gallery" class="nav-link transition">Galeri</a>
         <a href="#code" class="nav-link transition">Kode Project</a>
