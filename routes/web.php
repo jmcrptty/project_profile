@@ -139,12 +139,12 @@ Route::prefix('dashboard/home')->middleware('auth')->name('home.')->group(functi
     Route::prefix('dashboard/gallery')->middleware('auth')->name('gallery.')->group(function () {
 
         Route::get('/', [GaleriController::class, 'index'])->name('index');
-        
+
         Route::resource('foto-galeri', FotoGaleriController::class)->except([
-            'create', 'store', 'show', 'edit', 'destroy'
+            'create', 'show', 'edit'
         ]);
 
-        Route::resource('videogaleri', VideoGaleriController::class)->except(['create', 'store', 'destroy']);
+        Route::resource('videogaleri', VideoGaleriController::class)->except(['create']);
     });
 
 

@@ -12,15 +12,23 @@ class PageController extends Controller
     public function index()
     {
         // Ambil semua foto yang sudah terupload (foto_file tidak null)
-        $allPhotos = FotoGaleri::whereNotNull('foto_file')->orderBy('id', 'asc')->get();
+        $allPhotos = FotoGaleri::whereNotNull('foto_file')->latest()->get();
 
-        // Bagi foto menjadi 2 baris untuk tampilan gallery
-        $photosRow1 = $allPhotos->take(4); // Baris 1: foto 1-4
-        $photosRow2 = $allPhotos->slice(4, 4); // Baris 2: foto 5-8
+        // Bagi foto menjadi 2 baris (semua foto, tidak dibatasi)
+        $photosRow1 = $allPhotos->filter(function($photo, $index) {
+            return $index % 2 == 0; // Index genap (0, 2, 4, 6...)
+        })->values();
 
-        $photos = $allPhotos; // Untuk keperluan lain (jika ada)
+        $photosRow2 = $allPhotos->filter(function($photo, $index) {
+            return $index % 2 != 0; // Index ganjil (1, 3, 5, 7...)
+        })->values();
+
+        $photos = $allPhotos; // Semua foto untuk keperluan lain
         $contact = Contact::firstOrFail();
-        $video = VideoGaleri::first();
+
+        // Ambil semua video
+        $videos = VideoGaleri::latest()->get();
+        $video = $videos->first(); // Untuk backward compatibility
 
         // About data
         $background = About::background()->first();
@@ -29,6 +37,6 @@ class PageController extends Controller
         $mahasiswas = About::mahasiswa()->ordered()->get();
         $mitra = About::mitra()->first();
 
-        return view('main', compact('photos', 'photosRow1', 'photosRow2', 'video', 'contact', 'background', 'goals', 'dosens', 'mahasiswas', 'mitra'));
+        return view('main', compact('photos', 'photosRow1', 'photosRow2', 'videos', 'video', 'contact', 'background', 'goals', 'dosens', 'mahasiswas', 'mitra'));
     }
 }

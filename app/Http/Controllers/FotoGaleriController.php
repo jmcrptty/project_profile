@@ -33,8 +33,51 @@ class FotoGaleriController extends Controller
      */
     public function store(StoreFotoGaleriRequest $request)
     {
-        // larangan hard-coded
-        return redirect()->back()->withErrors(['upload_error' => 'Penambahan foto baru tidak diizinkan.']);
+        try {
+            // Validasi bahwa cropped_image_data ada
+            if (!$request->filled('cropped_image_data')) {
+                throw new \Exception('Data gambar tidak ditemukan.');
+            }
+
+            $imageData = $request->input('cropped_image_data');
+
+            // Validasi format data URI base64
+            if (preg_match('/^data:image\/(\w+);base64,/', $imageData, $type)) {
+                $imageData = substr($imageData, strpos($imageData, ',') + 1);
+                $type = strtolower($type[1]);
+
+                // Validasi tipe gambar yang diizinkan
+                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    throw new \Exception('Tipe gambar tidak valid. Hanya jpg, jpeg, gif, dan png yang diizinkan.');
+                }
+
+                // Decode base64
+                $imageData = base64_decode($imageData);
+                if ($imageData === false) {
+                    throw new \Exception('Gagal mendekode data base64.');
+                }
+            } else {
+                throw new \Exception('Data URI tidak sesuai format yang diharapkan.');
+            }
+
+            // Generate nama file unik dan simpan
+            // Format: galeriFoto/[random40chars].jpg
+            $newFileName = 'galeriFoto/' . Str::random(40) . '.' . $type;
+
+            // Simpan ke storage/app/public/galeriFoto/
+            Storage::disk('public')->put($newFileName, $imageData);
+
+            // Simpan ke database
+            FotoGaleri::create([
+                'foto_file' => $newFileName,
+                'deskripsi' => $request->caption ?? 'Foto Gallery'
+            ]);
+
+            return back()->with('success-foto', 'Foto berhasil ditambahkan!');
+
+        } catch (\Exception $e) {
+            return back()->withErrors(['upload_error' => 'Gagal menambahkan foto: ' . $e->getMessage()]);
+        }
     }
 
     /**

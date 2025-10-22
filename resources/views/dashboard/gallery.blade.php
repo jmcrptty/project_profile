@@ -40,7 +40,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-xs font-medium text-purple-100">Video Demo</p>
-                        <p class="mt-1 text-xl font-bold">1</p>
+                        <p class="mt-1 text-xl font-bold">{{ count($videos ?? []) }}</p>
                     </div>
                     <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
@@ -78,6 +78,9 @@
                     <h3 class="text-lg font-semibold text-gray-800">Galeri Foto</h3>
                     <p class="mt-1 text-xs text-gray-500">Klik foto untuk edit caption atau hapus</p>
                 </div>
+                <button onclick="openAddPhotoModal()" class="px-4 py-2 text-sm text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                    + Tambah Foto
+                </button>
             </div>
 
             <div class="p-6">
@@ -119,46 +122,171 @@
         </div>
 
         {{-- Video Demo Section --}}
-        @if($video)
-            <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
-                <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-purple-50 to-pink-50">
-                    <h3 class="text-lg font-semibold text-gray-800">Video Demo</h3>
-                    
-                    <button onclick="openEditVideoModal()" class="px-4 py-2 text-sm text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700">
-                        Edit Video
-                    </button>
-                </div>
+        <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
+            <div class="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-purple-50 to-pink-50">
+                <h3 class="text-lg font-semibold text-gray-800">Video Demo</h3>
 
-                <div class="p-6">
-                    <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
-                        <iframe 
-                            id="videoPreview"
-                            class="w-full h-full" 
-                            src="{{ $video->embed_url }}" 
-                            title="{{ $video->title }}" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    
-                    <div class="p-4 mt-4 bg-gray-800 rounded-lg">
-                        <h4 class="mb-1 font-semibold text-white">{{ $video->title }}</h4>
-                        <p class="text-sm text-gray-400">{{ $video->description }}</p>
-                    </div>
-                </div>
+                <button onclick="openAddVideoModal()" class="px-4 py-2 text-sm text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700">
+                    + Tambah Video
+                </button>
             </div>
-        @else
-            {{-- This is a fallback if the video row was somehow deleted from the database. --}}
-            <div class="p-6 text-center text-gray-500 bg-gray-100 border rounded-xl">
-                Video data could not be found. Please run the database seeder.
+
+            <div class="p-6">
+                @if($videos && count($videos) > 0)
+                    {{-- Jika ada 2 video atau lebih, tampilkan sejajar kiri-kanan --}}
+                    @if(count($videos) >= 2)
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            @foreach($videos as $videoItem)
+                            <div class="space-y-4">
+                                <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
+                                    <iframe
+                                        class="w-full h-full"
+                                        src="{{ $videoItem->embed_url }}"
+                                        title="{{ $videoItem->title }}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
+                                </div>
+
+                                <div class="p-4 bg-gray-800 rounded-lg">
+                                    <h4 class="mb-1 font-semibold text-white">{{ $videoItem->title }}</h4>
+                                    <p class="text-sm text-gray-400">{{ $videoItem->description }}</p>
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <button
+                                        onclick="openEditVideoModal({{ $videoItem->id }}, '{{ $videoItem->youtube_url }}', '{{ addslashes($videoItem->title) }}', '{{ addslashes($videoItem->description) }}', '{{ route('gallery.videogaleri.update', $videoItem->id) }}')"
+                                        class="flex-1 px-3 py-2 text-sm text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                                        Edit Video
+                                    </button>
+                                    <button
+                                        onclick="deleteVideo({{ $videoItem->id }}, '{{ route('gallery.videogaleri.destroy', $videoItem->id) }}')"
+                                        class="flex-1 px-3 py-2 text-sm text-white transition bg-red-600 rounded-lg hover:bg-red-700">
+                                        Hapus
+                                    </button>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    @else
+                        {{-- Jika hanya 1 video, tampilkan besar --}}
+                        @foreach($videos as $videoItem)
+                        <div class="space-y-4">
+                            <div class="overflow-hidden bg-gray-900 border rounded-lg aspect-video">
+                                <iframe
+                                    class="w-full h-full"
+                                    src="{{ $videoItem->embed_url }}"
+                                    title="{{ $videoItem->title }}"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+
+                            <div class="p-4 bg-gray-800 rounded-lg">
+                                <h4 class="mb-1 font-semibold text-white">{{ $videoItem->title }}</h4>
+                                <p class="text-sm text-gray-400">{{ $videoItem->description }}</p>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button
+                                    onclick="openEditVideoModal({{ $videoItem->id }}, '{{ $videoItem->youtube_url }}', '{{ addslashes($videoItem->title) }}', '{{ addslashes($videoItem->description) }}', '{{ route('gallery.videogaleri.update', $videoItem->id) }}')"
+                                    class="flex-1 px-3 py-2 text-sm text-white transition bg-blue-600 rounded-lg hover:bg-blue-700">
+                                    Edit Video
+                                </button>
+                                <button
+                                    onclick="deleteVideo({{ $videoItem->id }}, '{{ route('gallery.videogaleri.destroy', $videoItem->id) }}')"
+                                    class="flex-1 px-3 py-2 text-sm text-white transition bg-red-600 rounded-lg hover:bg-red-700">
+                                    Hapus
+                                </button>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
+                @else
+                    {{-- Jika tidak ada video --}}
+                    <div class="py-12 text-center">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <p class="font-semibold text-gray-700">Belum ada video demo.</p>
+                        <p class="mt-1 text-sm text-gray-500">Klik tombol "Tambah Video" untuk menambahkan video.</p>
+                    </div>
+                @endif
             </div>
-        @endif
+        </div>
 
     </div>
 </main>
 
 {{-- kalau sewaktu-waktu ada revisi delete dan tambah, refer back to "minor change on gallery" commit on backend branch --}}
+
+{{-- Add Photo Modal --}}
+<div id="addPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
+    <div class="w-full max-w-3xl bg-white shadow-2xl rounded-xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
+            <h3 class="text-xl font-bold text-gray-800">Tambah Foto Baru</h3>
+            <button onclick="closeAddPhotoModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <form id="addPhotoForm" action="{{ route('gallery.foto-galeri.store') }}" method="POST" class="p-6">
+            @csrf
+
+            <div class="space-y-6">
+                <div>
+                    <label class="block mb-2 text-sm font-semibold text-gray-700">Area Preview & Crop</label>
+                    <div class="w-full bg-gray-100 border-2 border-dashed rounded-lg min-h-[400px]">
+                        <img
+                            id="addImageToCrop"
+                            src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="90%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>'
+                            alt="Preview"
+                            class="object-contain w-full h-full"
+                        >
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div>
+                        <label for="addPhotoFile" class="block mb-2 text-sm font-semibold text-gray-700">Pilih Foto <span class="text-red-500">*</span></label>
+                        <input
+                            type="file"
+                            id="addPhotoFile"
+                            name="photo_file"
+                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            accept="image/*"
+                            required
+                        >
+                        <p class="mt-1 text-xs text-gray-500">Format: JPG, JPEG, PNG, GIF</p>
+                    </div>
+
+                    <div>
+                        <label for="addPhotoCaption" class="block mb-2 text-sm font-semibold text-gray-700">Caption <span class="text-red-500">*</span></label>
+                        <textarea
+                            id="addPhotoCaption"
+                            name="caption"
+                            rows="4"
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                            placeholder="Deskripsi foto..."
+                            maxlength="100"
+                        ></textarea>
+
+                        <input type="hidden" name="cropped_image_data" id="addCroppedImageData">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-6 mt-6 border-t">
+                <button type="button" onclick="closeAddPhotoModal()" class="px-6 py-2.5 border text-gray-700 hover:bg-gray-50 rounded-lg">Batal</button>
+                <button type="button" id="submitAdd" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Tambah Foto</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {{-- Edit Photo Modal --}}
 <div id="editPhotoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
@@ -230,6 +358,42 @@
 
 
 
+{{-- Add Video Modal --}}
+<div id="addVideoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
+    <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl">
+        <div class="flex items-center justify-between px-6 py-4 border-b">
+            <h3 class="text-xl font-bold text-gray-800">Tambah Video Demo</h3>
+            <button onclick="closeAddVideoModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <form id="addVideoForm" action="{{ route('gallery.videogaleri.store') }}" method="POST" class="p-6 space-y-4">
+            @csrf
+
+            <div>
+                <label for="addVideoUrl" class="block mb-2 text-sm font-semibold text-gray-700">YouTube URL <span class="text-red-500">*</span></label>
+                <input type="url" id="addVideoUrl" name="youtube_url" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="https://www.youtube.com/watch?v=..." required>
+            </div>
+
+            <div>
+                <label for="addVideoTitle" class="block mb-2 text-sm font-semibold text-gray-700">Judul Video <span class="text-red-500">*</span></label>
+                <input type="text" id="addVideoTitle" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Judul video demo..." required>
+            </div>
+
+            <div>
+                <label for="addVideoDescription" class="block mb-2 text-sm font-semibold text-gray-700">Deskripsi Video <span class="text-red-500">*</span></label>
+                <textarea id="addVideoDescription" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg resize-none" placeholder="Deskripsi video demo..." required></textarea>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 mt-4 border-t">
+                <button type="button" onclick="closeAddVideoModal()" class="px-6 py-2.5 border text-gray-700 rounded-lg">Batal</button>
+                <button type="submit" class="px-6 py-2.5 bg-indigo-600 text-white rounded-lg">Tambah Video</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 {{-- Edit Video Modal --}}
 <div id="editVideoModal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/50 backdrop-blur-sm">
     <div class="w-full max-w-2xl bg-white shadow-2xl rounded-xl">
@@ -240,24 +404,23 @@
             </button>
         </div>
 
-        {{-- The form now has the action and data built-in --}}
-        <form id="editVideoForm" action="{{ route('gallery.videogaleri.update', $video->id ) }}" method="POST" class="p-6 space-y-4">
+        <form id="editVideoForm" action="" method="POST" class="p-6 space-y-4">
             @csrf
             @method('PUT')
-            
+
             <div>
-                <label for="videoUrl" class="block mb-2 text-sm font-semibold text-gray-700">YouTube URL <span class="text-red-500">*</span></label>
-                <input type="url" id="videoUrl" name="youtube_url" value="{{ $video->youtube_url }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
-            </div>
-            
-            <div>
-                <label for="videoTitle" class="block mb-2 text-sm font-semibold text-gray-700">Judul Video <span class="text-red-500">*</span></label>
-                <input type="text" id="videoTitle" name="title" value="{{ $video->title }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+                <label for="editVideoUrl" class="block mb-2 text-sm font-semibold text-gray-700">YouTube URL <span class="text-red-500">*</span></label>
+                <input type="url" id="editVideoUrl" name="youtube_url" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
             </div>
 
             <div>
-                <label for="videoDescription" class="block mb-2 text-sm font-semibold text-gray-700">Deskripsi Video <span class="text-red-500">*</span></label>
-                <textarea id="videoDescription" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg resize-none" required>{{ $video->description }}</textarea>
+                <label for="editVideoTitle" class="block mb-2 text-sm font-semibold text-gray-700">Judul Video <span class="text-red-500">*</span></label>
+                <input type="text" id="editVideoTitle" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+
+            <div>
+                <label for="editVideoDescription" class="block mb-2 text-sm font-semibold text-gray-700">Deskripsi Video <span class="text-red-500">*</span></label>
+                <textarea id="editVideoDescription" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg resize-none" required></textarea>
             </div>
 
             <div class="flex justify-end gap-3 pt-4 mt-4 border-t">
@@ -269,6 +432,89 @@
 </div>
 
 <script>
+
+    // 0. Add Photo Modal
+    const addModal = document.getElementById('addPhotoModal');
+    const addForm = document.getElementById('addPhotoForm');
+    const addFileInput = document.getElementById('addPhotoFile');
+    const addImage = document.getElementById('addImageToCrop');
+    const addCaptionInput = document.getElementById('addPhotoCaption');
+    const addCroppedImage = document.getElementById('addCroppedImageData');
+    const submitAddButton = document.getElementById('submitAdd');
+    let addCropper;
+
+    // Add Photo Modal -> Open
+    function openAddPhotoModal() {
+        addModal.classList.remove('hidden');
+    }
+
+    // Add Photo Modal -> Close and Cleanse Data
+    function closeAddPhotoModal() {
+        addModal.classList.add('hidden');
+        addFileInput.value = '';
+        addCaptionInput.value = '';
+        addCroppedImage.value = '';
+        addImage.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-400" viewBox="0 0 640 426" fill="currentColor"><path d="M560 64H80a48 48 0 00-48 48v200a48 48 0 0048 48h480a48 48 0 0048-48V112a48 48 0 00-48-48zm-80 64a48 48 0 11-96 0 48 48 0 0196 0zm-352 96l80-80a16 16 0 0122.62 0l114.63 114.63a16 16 0 0022.62 0L464 200.25a16 16 0 0122.62 0L528 241.37V304H128z" opacity="0.4"></path><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%239ca3af">Pilih gambar untuk memulai</text></svg>';
+
+        if (addCropper) {
+            addCropper.destroy();
+            addCropper = null;
+        }
+    }
+
+    // Add Photo Modal -> Listen for file selection to initialize cropper
+    addFileInput.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                addImage.src = event.target.result;
+
+                if (addCropper) {
+                    addCropper.destroy();
+                }
+
+                addCropper = new Cropper(addImage, {
+                    aspectRatio: 1280 / 853,
+                    viewMode: 1,
+                    dragMode: 'crop',
+                    guides: true,
+                    background: false,
+                    autoCropArea: 0.9,
+                    movable: false,
+                    toggleDragModeOnDblclick: false,
+                });
+            };
+            reader.readAsDataURL(files[0]);
+        }
+    });
+
+    // Add Photo Modal -> Handle form submission
+    submitAddButton.addEventListener('click', function() {
+        if (!addCropper) {
+            alert('Silakan pilih foto terlebih dahulu!');
+            return;
+        }
+
+        this.disabled = true;
+        this.innerText = 'Menyimpan...';
+
+        const canvas = addCropper.getCroppedCanvas({
+            width: 1280,
+            height: 853,
+            imageSmoothingQuality: 'high',
+        });
+
+        canvas.toBlob(function(blob) {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function() {
+                const base64data = reader.result;
+                addCroppedImage.value = base64data;
+                addForm.submit();
+            };
+        }, 'image/jpeg', 0.9);
+    });
 
     // 1. Edit Photo Modal
     const editModal = document.getElementById('editPhotoModal');
@@ -370,21 +616,66 @@
 
     // 3. Video Modal Functions
 
+    const addVideoModal = document.getElementById('addVideoModal');
     const editVideoModal = document.getElementById('editVideoModal');
-    function openEditVideoModal() {
+    const editVideoForm = document.getElementById('editVideoForm');
+
+    // Add Video Modal -> Open
+    function openAddVideoModal() {
+        addVideoModal.classList.remove('hidden');
+    }
+
+    // Add Video Modal -> Close
+    function closeAddVideoModal() {
+        addVideoModal.classList.add('hidden');
+        document.getElementById('addVideoForm').reset();
+    }
+
+    // Edit Video Modal -> Open and Populate Data
+    function openEditVideoModal(id, youtubeUrl, title, description, updateUrl) {
+        editVideoForm.action = updateUrl;
+        document.getElementById('editVideoUrl').value = youtubeUrl;
+        document.getElementById('editVideoTitle').value = title;
+        document.getElementById('editVideoDescription').value = description;
         editVideoModal.classList.remove('hidden');
     }
 
+    // Edit Video Modal -> Close
     function closeEditVideoModal() {
         editVideoModal.classList.add('hidden');
     }
 
-    // Close modals on ESC - perlu kah?
+    // Delete Video Function
+    function deleteVideo(id, deleteUrl) {
+        if (confirm('Apakah Anda yakin ingin menghapus video ini?')) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+
+            const methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            form.appendChild(methodField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    // Close modals on ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            closePhotoModal();
+            closeAddPhotoModal();
             closeEditPhotoModal();
-            closeVideoModal();
+            closeAddVideoModal();
+            closeEditVideoModal();
         }
     });
 

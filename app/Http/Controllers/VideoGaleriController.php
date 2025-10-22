@@ -29,7 +29,19 @@ class VideoGaleriController extends Controller
      */
     public function store(StoreVideoGaleriRequest $request)
     {
-        //
+        $request->validate([
+            'youtube_url' => 'required|url',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        VideoGaleri::create([
+            'youtube_url' => $request->youtube_url,
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back()->with('success', 'Video berhasil ditambahkan!');
     }
 
     /**
@@ -73,6 +85,7 @@ class VideoGaleriController extends Controller
      */
     public function destroy(VideoGaleri $videogaleri)
     {
-        //
+        $videogaleri->delete();
+        return redirect()->back()->with('success', 'Video berhasil dihapus!');
     }
 }

@@ -17,8 +17,9 @@ class GaleriController extends Controller
         $photosRow2 = $allPhotos->slice(4, 4); // Baris 2: foto 5-8
 
         $photos = $allPhotos; // Untuk keperluan dashboard (tetap kirim semua)
-        $video = VideoGaleri::first();
+        $videos = VideoGaleri::latest()->get(); // Ambil semua video
+        $video = $videos->first(); // Untuk backward compatibility
 
-        return view('dashboard.gallery', compact('photos', 'photosRow1', 'photosRow2', 'video'));
+        return view('dashboard.gallery', compact('photos', 'photosRow1', 'photosRow2', 'videos', 'video'));
     }
 }
