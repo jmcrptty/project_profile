@@ -1,6 +1,6 @@
 {{-- FILE: resources/views/about.blade.php --}}
 <section id="about" class="py-24 bg-white">
-  <div class="max-w-6xl mx-auto px-6">
+  <div class="max-w-[1500px] mx-auto px-6">
 
     <!-- Section Title -->
     <div class="text-center mb-16 animate-on-scroll fade-in-up">
@@ -26,7 +26,7 @@
           @if($goals && $goals->content)
             @foreach($goals->goals_array as $goal)
             <li class="flex items-start gap-3 text-gray-600">
-              <span class="flex-shrink-0 w-1.5 h-1.5 bg-gray-800 rounded-full mt-2"></span>
+              <span class="flex-shrink-0 w-1.5 h-1.5 bg-blue-600 rounded-full mt-2"></span>
               <span class="leading-relaxed">{{ $goal }}</span>
             </li>
             @endforeach
@@ -47,26 +47,26 @@
       @if($dosens && $dosens->count() > 0)
       <div class="relative" id="dosenCarouselSection">
         <button id="prevBtnDosen"
-                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white border border-gray-300 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-600">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
 
-        <div class="overflow-hidden">
-          <div id="carouselTrackDosen" class="flex gap-6 transition-transform duration-500 ease-out">
+        <div class="overflow-hidden mx-auto" style="max-width: 1200px;">
+          <div id="carouselTrackDosen" class="flex gap-0 sm:gap-4 md:gap-6 transition-transform duration-500 ease-out">
 
             @foreach($dosens as $index => $dosen)
-            <div onclick="openModal('dosen', {{ json_encode($dosen) }})" class="min-w-[280px] bg-white border border-gray-200 rounded-lg p-6 text-center hover:border-gray-400 transition animate-on-scroll fade-in-up group cursor-pointer" style="animation-delay: {{ $index * 0.1 }}s">
+            <div onclick="openModal('dosen', {{ json_encode($dosen) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-white border border-gray-200 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-lg hover:shadow-xl" style="animation-delay: {{ $index * 0.1 }}s">
               @if($dosen->photo)
-              <img src="{{ asset('storage/' . $dosen->photo) }}" alt="{{ $dosen->name }}" class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-2 border-gray-200">
+              <img src="{{ asset('storage/' . $dosen->photo) }}" alt="{{ $dosen->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
               @else
-              <div class="w-32 h-32 mx-auto rounded-full bg-gray-800 flex items-center justify-center text-white text-3xl font-light mb-4">
+              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
                 {{ $dosen->initials }}
               </div>
               @endif
-              <h4 class="text-lg font-medium text-gray-800 mb-1">{{ $dosen->name }}</h4>
-              <p class="text-sm text-gray-500">{{ $dosen->position }}</p>
+              <h4 class="text-lg md:text-xl lg:text-xl font-medium text-gray-800 mb-2">{{ $dosen->name }}</h4>
+              <p class="text-sm md:text-base lg:text-base text-gray-600">{{ $dosen->position }}</p>
             </div>
             @endforeach
 
@@ -74,8 +74,8 @@
         </div>
 
         <button id="nextBtnDosen"
-                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white border border-gray-300 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-600">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
@@ -95,26 +95,26 @@
       @if($mahasiswas && $mahasiswas->count() > 0)
       <div class="relative" id="mahasiswaCarouselSection">
         <button id="prevBtnMahasiswa"
-                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white border border-gray-300 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-600">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
 
-        <div class="overflow-hidden">
-          <div id="carouselTrackMahasiswa" class="flex gap-6 transition-transform duration-500 ease-out">
+        <div class="overflow-hidden mx-auto" style="max-width: 1200px;">
+          <div id="carouselTrackMahasiswa" class="flex gap-0 sm:gap-4 md:gap-6 transition-transform duration-500 ease-out">
 
             @foreach($mahasiswas as $index => $mahasiswa)
-            <div onclick="openModal('mahasiswa', {{ json_encode($mahasiswa) }})" class="min-w-[280px] bg-white border border-gray-200 rounded-lg p-6 text-center hover:border-gray-400 transition animate-on-scroll fade-in-up group cursor-pointer" style="animation-delay: {{ $index * 0.1 }}s">
+            <div onclick="openModal('mahasiswa', {{ json_encode($mahasiswa) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-white border border-gray-200 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-lg hover:shadow-xl" style="animation-delay: {{ $index * 0.1 }}s">
               @if($mahasiswa->photo)
-              <img src="{{ asset('storage/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-32 h-32 mx-auto rounded-full object-cover mb-4 border-2 border-gray-200">
+              <img src="{{ asset('storage/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
               @else
-              <div class="w-32 h-32 mx-auto rounded-full bg-gray-800 flex items-center justify-center text-white text-3xl font-light mb-4">
+              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
                 {{ $mahasiswa->initials }}
               </div>
               @endif
-              <h4 class="text-lg font-medium text-gray-800 mb-1">{{ $mahasiswa->name }}</h4>
-              <p class="text-sm text-gray-500">{{ $mahasiswa->role }}</p>
+              <h4 class="text-lg md:text-xl lg:text-xl font-medium text-gray-800 mb-2">{{ $mahasiswa->name }}</h4>
+              <p class="text-sm md:text-base lg:text-base text-gray-600">{{ $mahasiswa->role }}</p>
             </div>
             @endforeach
 
@@ -122,8 +122,8 @@
         </div>
 
         <button id="nextBtnMahasiswa"
-                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white border border-gray-300 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-600">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
@@ -141,18 +141,18 @@
       </div>
 
       @if($mitra)
-      <div class="flex justify-center animate-on-scroll fade-in-up">
-        <div onclick="openModal('mitra', {{ json_encode($mitra) }})" class="w-full max-w-md bg-white border border-gray-200 rounded-lg p-8 text-center hover:border-gray-400 transition cursor-pointer">
+      <div class="flex justify-center animate-on-scroll fade-in-up px-4">
+        <div onclick="openModal('mitra', {{ json_encode($mitra) }})" class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-white border border-gray-200 rounded-lg p-6 md:p-7 lg:p-8 text-center hover:border-blue-600 transition cursor-pointer shadow-lg hover:shadow-xl">
           @if($mitra->logo)
-          <img src="{{ asset('storage/' . $mitra->logo) }}" alt="{{ $mitra->name }}" class="w-40 h-40 mx-auto rounded-lg object-cover mb-6 border border-gray-200">
+          <img src="{{ asset('storage/' . $mitra->logo) }}" alt="{{ $mitra->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
           @else
-          <div class="w-40 h-40 mx-auto rounded-lg bg-gray-800 flex items-center justify-center text-white text-4xl font-light mb-6">
+          <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
             {{ $mitra->initials }}
           </div>
           @endif
-          <h4 class="text-xl font-medium text-gray-800 mb-2">{{ $mitra->name }}</h4>
-          <p class="text-xs text-gray-500 mb-4">{{ $mitra->mitra_type }}</p>
-          <p class="text-sm text-gray-600 leading-relaxed text-justify">
+          <h4 class="text-xl md:text-xl lg:text-2xl font-medium text-gray-800 mb-2">{{ $mitra->name }}</h4>
+          <p class="text-xs md:text-sm lg:text-sm text-gray-500 mb-3 md:mb-4 lg:mb-4">{{ $mitra->mitra_type }}</p>
+          <p class="text-sm md:text-base lg:text-base text-gray-600 leading-relaxed">
             {{ $mitra->description ?? 'Tidak ada deskripsi' }}
           </p>
         </div>
@@ -309,14 +309,22 @@
       }
 
       function setupCarousels() {
-        const cardWidth = 280 + 24; // card width + gap
-
         // Responsive visible cards
         function getVisibleCards() {
           const width = window.innerWidth;
           if (width < 640) return 1; // mobile
           if (width < 1024) return 2; // tablet
           return 3; // desktop
+        }
+
+        // Get actual card width from DOM
+        function getCardWidth(track) {
+          if (!track || !track.children[0]) return 474; // fallback
+          const card = track.children[0];
+          const cardRect = card.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(track);
+          const gap = parseFloat(computedStyle.gap) || 0;
+          return cardRect.width + gap;
         }
 
         let visibleCards = getVisibleCards();
@@ -328,28 +336,33 @@
 
         if (trackDosen && prevBtnDosen && nextBtnDosen) {
           const cardsDosen = trackDosen.children;
-          const maxIndexDosen = Math.max(0, cardsDosen.length - visibleCards);
-          let currentIndexDosen = 0;
+          const totalCardsDosen = cardsDosen.length;
+          let currentPageDosen = 0;
+
+          // Calculate max pages (setiap page tampil 3 card)
+          const maxPagesDosen = Math.ceil(totalCardsDosen / visibleCards) - 1;
 
           function updateCarouselDosen() {
-            const offset = -currentIndexDosen * cardWidth;
+            // Slide sebesar 3 card sekaligus
+            const cardWidth = getCardWidth(trackDosen);
+            const offset = -currentPageDosen * cardWidth * visibleCards;
             trackDosen.style.transform = `translateX(${offset}px)`;
-            prevBtnDosen.disabled = currentIndexDosen === 0;
-            nextBtnDosen.disabled = currentIndexDosen === maxIndexDosen;
-            prevBtnDosen.style.opacity = currentIndexDosen === 0 ? '0.3' : '1';
-            nextBtnDosen.style.opacity = currentIndexDosen === maxIndexDosen ? '0.3' : '1';
+            prevBtnDosen.disabled = currentPageDosen === 0;
+            nextBtnDosen.disabled = currentPageDosen >= maxPagesDosen;
+            prevBtnDosen.style.opacity = currentPageDosen === 0 ? '0.3' : '1';
+            nextBtnDosen.style.opacity = currentPageDosen >= maxPagesDosen ? '0.3' : '1';
           }
 
           prevBtnDosen.addEventListener('click', () => {
-            if (currentIndexDosen > 0) {
-              currentIndexDosen--;
+            if (currentPageDosen > 0) {
+              currentPageDosen--;
               updateCarouselDosen();
             }
           });
 
           nextBtnDosen.addEventListener('click', () => {
-            if (currentIndexDosen < maxIndexDosen) {
-              currentIndexDosen++;
+            if (currentPageDosen < maxPagesDosen) {
+              currentPageDosen++;
               updateCarouselDosen();
             }
           });
@@ -364,28 +377,33 @@
 
         if (trackMahasiswa && prevBtnMahasiswa && nextBtnMahasiswa) {
           const cardsMahasiswa = trackMahasiswa.children;
-          const maxIndexMahasiswa = Math.max(0, cardsMahasiswa.length - visibleCards);
-          let currentIndexMahasiswa = 0;
+          const totalCardsMahasiswa = cardsMahasiswa.length;
+          let currentPageMahasiswa = 0;
+
+          // Calculate max pages (setiap page tampil 3 card)
+          const maxPagesMahasiswa = Math.ceil(totalCardsMahasiswa / visibleCards) - 1;
 
           function updateCarouselMahasiswa() {
-            const offset = -currentIndexMahasiswa * cardWidth;
+            // Slide sebesar 3 card sekaligus
+            const cardWidth = getCardWidth(trackMahasiswa);
+            const offset = -currentPageMahasiswa * cardWidth * visibleCards;
             trackMahasiswa.style.transform = `translateX(${offset}px)`;
-            prevBtnMahasiswa.disabled = currentIndexMahasiswa === 0;
-            nextBtnMahasiswa.disabled = currentIndexMahasiswa === maxIndexMahasiswa;
-            prevBtnMahasiswa.style.opacity = currentIndexMahasiswa === 0 ? '0.3' : '1';
-            nextBtnMahasiswa.style.opacity = currentIndexMahasiswa === maxIndexMahasiswa ? '0.3' : '1';
+            prevBtnMahasiswa.disabled = currentPageMahasiswa === 0;
+            nextBtnMahasiswa.disabled = currentPageMahasiswa >= maxPagesMahasiswa;
+            prevBtnMahasiswa.style.opacity = currentPageMahasiswa === 0 ? '0.3' : '1';
+            nextBtnMahasiswa.style.opacity = currentPageMahasiswa >= maxPagesMahasiswa ? '0.3' : '1';
           }
 
           prevBtnMahasiswa.addEventListener('click', () => {
-            if (currentIndexMahasiswa > 0) {
-              currentIndexMahasiswa--;
+            if (currentPageMahasiswa > 0) {
+              currentPageMahasiswa--;
               updateCarouselMahasiswa();
             }
           });
 
           nextBtnMahasiswa.addEventListener('click', () => {
-            if (currentIndexMahasiswa < maxIndexMahasiswa) {
-              currentIndexMahasiswa++;
+            if (currentPageMahasiswa < maxPagesMahasiswa) {
+              currentPageMahasiswa++;
               updateCarouselMahasiswa();
             }
           });
@@ -397,24 +415,28 @@
         window.addEventListener('resize', () => {
           visibleCards = getVisibleCards();
           if (trackDosen) {
-            const maxIndexDosen = Math.max(0, trackDosen.children.length - visibleCards);
-            currentIndexDosen = Math.min(currentIndexDosen, maxIndexDosen);
-            const offset = -currentIndexDosen * cardWidth;
+            const cardWidthDosen = getCardWidth(trackDosen);
+            const totalCardsDosen = trackDosen.children.length;
+            const maxPagesDosen = Math.ceil(totalCardsDosen / visibleCards) - 1;
+            currentPageDosen = Math.min(currentPageDosen, maxPagesDosen);
+            const offset = -currentPageDosen * cardWidthDosen * visibleCards;
             trackDosen.style.transform = `translateX(${offset}px)`;
-            prevBtnDosen.disabled = currentIndexDosen === 0;
-            nextBtnDosen.disabled = currentIndexDosen === maxIndexDosen;
-            prevBtnDosen.style.opacity = currentIndexDosen === 0 ? '0.3' : '1';
-            nextBtnDosen.style.opacity = currentIndexDosen === maxIndexDosen ? '0.3' : '1';
+            prevBtnDosen.disabled = currentPageDosen === 0;
+            nextBtnDosen.disabled = currentPageDosen >= maxPagesDosen;
+            prevBtnDosen.style.opacity = currentPageDosen === 0 ? '0.3' : '1';
+            nextBtnDosen.style.opacity = currentPageDosen >= maxPagesDosen ? '0.3' : '1';
           }
           if (trackMahasiswa) {
-            const maxIndexMahasiswa = Math.max(0, trackMahasiswa.children.length - visibleCards);
-            currentIndexMahasiswa = Math.min(currentIndexMahasiswa, maxIndexMahasiswa);
-            const offset = -currentIndexMahasiswa * cardWidth;
+            const cardWidthMahasiswa = getCardWidth(trackMahasiswa);
+            const totalCardsMahasiswa = trackMahasiswa.children.length;
+            const maxPagesMahasiswa = Math.ceil(totalCardsMahasiswa / visibleCards) - 1;
+            currentPageMahasiswa = Math.min(currentPageMahasiswa, maxPagesMahasiswa);
+            const offset = -currentPageMahasiswa * cardWidthMahasiswa * visibleCards;
             trackMahasiswa.style.transform = `translateX(${offset}px)`;
-            prevBtnMahasiswa.disabled = currentIndexMahasiswa === 0;
-            nextBtnMahasiswa.disabled = currentIndexMahasiswa === maxIndexMahasiswa;
-            prevBtnMahasiswa.style.opacity = currentIndexMahasiswa === 0 ? '0.3' : '1';
-            nextBtnMahasiswa.style.opacity = currentIndexMahasiswa === maxIndexMahasiswa ? '0.3' : '1';
+            prevBtnMahasiswa.disabled = currentPageMahasiswa === 0;
+            nextBtnMahasiswa.disabled = currentPageMahasiswa >= maxPagesMahasiswa;
+            prevBtnMahasiswa.style.opacity = currentPageMahasiswa === 0 ? '0.3' : '1';
+            nextBtnMahasiswa.style.opacity = currentPageMahasiswa >= maxPagesMahasiswa ? '0.3' : '1';
           }
         });
       }

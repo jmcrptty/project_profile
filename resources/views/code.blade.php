@@ -3,24 +3,24 @@
     $code = App\Models\Code::first();
 @endphp
 
-<section id="code" class="py-20 bg-gray-50">
-  <div class="max-w-5xl mx-auto px-6">
+<section id="code" class="py-20 bg-white">
+  <div class="max-w-[1500px] mx-auto px-6">
     <h2 class="text-4xl font-light text-gray-800 text-center mb-4 tracking-wide animate-on-scroll fade-in-up"> Preview Kode Project IoT</h2>
     <p class="text-center text-gray-600 mb-12 animate-on-scroll fade-in-up" style="animation-delay: 0.1s">Source code Smart Farming</p>
 
     <!-- Code Tabs -->
-    <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-6 animate-on-scroll fade-in-up" style="animation-delay: 0.2s">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6 animate-on-scroll fade-in-up border border-gray-200" style="animation-delay: 0.2s">
       <div class="flex border-b border-gray-200">
-        <button class="code-tab px-6 py-3 text-sm font-medium bg-gray-800 text-white transition" data-tab="arduino">Offline</button>
-        <button class="code-tab px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 transition" data-tab="python">Online</button>
+        <button class="code-tab px-6 py-3 text-sm font-medium bg-blue-600 text-white transition" data-tab="arduino">Offline</button>
+        <button class="code-tab px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition" data-tab="python">Online</button>
       </div>
       <div class="p-6">
         <!-- Arduino Code -->
         <div id="code-arduino" class="code-content">
-          <div class="bg-gray-900 rounded-lg overflow-hidden">
-            <div class="bg-gray-800 px-4 py-2 flex items-center justify-between border-b border-gray-700">
-              <span class="text-xs text-gray-400 font-mono">Online</span>
-              <button onclick="copyCode('arduino')" class="text-xs text-gray-400 hover:text-white transition flex items-center gap-1">
+          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
+              <span class="text-xs text-gray-600 font-mono">Online</span>
+              <button onclick="copyCode('arduino')" class="text-xs text-gray-600 hover:text-blue-600 transition flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                 </svg>
@@ -48,10 +48,10 @@ void loop() {
 
         <!-- Python Code -->
         <div id="code-python" class="code-content hidden">
-          <div class="bg-gray-900 rounded-lg overflow-hidden">
-            <div class="bg-gray-800 px-4 py-2 flex items-center justify-between border-b border-gray-700">
-              <span class="text-xs text-gray-400 font-mono">backend_api.py</span>
-              <button onclick="copyCode('python')" class="text-xs text-gray-400 hover:text-white transition flex items-center gap-1">
+          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
+            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
+              <span class="text-xs text-gray-600 font-mono">backend_api.py</span>
+              <button onclick="copyCode('python')" class="text-xs text-gray-600 hover:text-blue-600 transition flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                 </svg>
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     <!-- GitHub Link -->
     <div class="text-center animate-on-scroll fade-in-up" style="animation-delay: 0.3s">
-      <a href="{{ $code->github_url ?? 'https://github.com/agritech-iot/project' }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition">
+      <a href="{{ $code->github_url ?? 'https://github.com/agritech-iot/project' }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-500 transition shadow-lg hover:shadow-blue-500/50">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
         </svg>
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     <!-- Documentation -->
     <div class="mt-12 grid md:grid-cols-2 gap-6">
-      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-left" style="animation-delay: 0.4s">
+      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-left shadow-lg hover:shadow-xl transition" style="animation-delay: 0.4s">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">📦 Hardware Requirements</h3>
         <ul class="space-y-2 text-sm text-gray-600">
           @forelse($code->hardware_requirements ?? [] as $item)
@@ -109,7 +109,7 @@ if __name__ == '__main__':
           @endforelse
         </ul>
       </div>
-      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-right" style="animation-delay: 0.4s">
+      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-right shadow-lg hover:shadow-xl transition" style="animation-delay: 0.4s">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">⚙️ Software Stack</h3>
         <ul class="space-y-2 text-sm text-gray-600">
           @forelse($code->software_stack ?? [] as $item)
@@ -171,13 +171,13 @@ if __name__ == '__main__':
 
       // Remove active class from all tabs
       codeTabs.forEach(t => {
-        t.classList.remove('bg-gray-800', 'text-white');
-        t.classList.add('text-gray-600', 'hover:bg-gray-50');
+        t.classList.remove('bg-blue-600', 'text-white');
+        t.classList.add('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-800');
       });
 
       // Add active class to clicked tab
-      tab.classList.add('bg-gray-800', 'text-white');
-      tab.classList.remove('text-gray-600', 'hover:bg-gray-50');
+      tab.classList.add('bg-blue-600', 'text-white');
+      tab.classList.remove('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-800');
 
       // Hide all code contents
       codeContents.forEach(content => {
