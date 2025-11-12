@@ -1,5 +1,5 @@
 {{-- FILE: resources/views/about.blade.php --}}
-<section id="about" class="py-24 bg-white">
+<section id="about" class="py-24 bg-slate-200">
   <div class="max-w-[1500px] mx-auto px-6">
 
     <!-- Section Title -->
@@ -13,7 +13,7 @@
 
       <!-- Latar Belakang -->
       <div class="animate-on-scroll fade-in-left">
-        <h3 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b border-gray-200">Latar Belakang</h3>
+        <h3 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b border-slate-300">Latar Belakang</h3>
         <p class="text-gray-600 leading-relaxed text-justify">
           {{ $background->content ?? 'Belum ada latar belakang' }}
         </p>
@@ -21,7 +21,7 @@
 
       <!-- Tujuan Project -->
       <div class="animate-on-scroll fade-in-right">
-        <h3 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b border-gray-200">Tujuan Project</h3>
+        <h3 class="text-xl font-medium text-gray-800 mb-4 pb-2 border-b border-slate-300">Tujuan Project</h3>
         <ul class="space-y-3">
           @if($goals && $goals->content)
             @foreach($goals->goals_array as $goal)
@@ -47,7 +47,7 @@
       @if($dosens && $dosens->count() > 0)
       <div class="relative" id="dosenCarouselSection">
         <button id="prevBtnDosen"
-                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-slate-200 border border-slate-300 rounded-full hover:bg-slate-300 transition z-10 flex items-center justify-center text-gray-700 shadow-md">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
@@ -57,11 +57,11 @@
           <div id="carouselTrackDosen" class="flex gap-0 sm:gap-4 md:gap-6 transition-transform duration-500 ease-out">
 
             @foreach($dosens as $index => $dosen)
-            <div onclick="openModal('dosen', {{ json_encode($dosen) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-white border border-gray-200 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-lg hover:shadow-xl" style="animation-delay: {{ $index * 0.1 }}s">
+            <div onclick="openModal('dosen', {{ json_encode($dosen) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-slate-200 border border-slate-300 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-md hover:shadow-lg" style="animation-delay: {{ $index * 0.1 }}s">
               @if($dosen->photo)
-              <img src="{{ asset('storage/' . $dosen->photo) }}" alt="{{ $dosen->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
+              <img src="{{ asset('storage/' . $dosen->photo) }}" alt="{{ $dosen->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-slate-300">
               @else
-              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
+              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-slate-300 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
                 {{ $dosen->initials }}
               </div>
               @endif
@@ -74,7 +74,7 @@
         </div>
 
         <button id="nextBtnDosen"
-                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-slate-200 border border-slate-300 rounded-full hover:bg-slate-300 transition z-10 flex items-center justify-center text-gray-700 shadow-md">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
@@ -95,7 +95,7 @@
       @if($mahasiswas && $mahasiswas->count() > 0)
       <div class="relative" id="mahasiswaCarouselSection">
         <button id="prevBtnMahasiswa"
-                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+                class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-slate-200 border border-slate-300 rounded-full hover:bg-slate-300 transition z-10 flex items-center justify-center text-gray-700 shadow-md">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
@@ -105,11 +105,11 @@
           <div id="carouselTrackMahasiswa" class="flex gap-0 sm:gap-4 md:gap-6 transition-transform duration-500 ease-out">
 
             @foreach($mahasiswas as $index => $mahasiswa)
-            <div onclick="openModal('mahasiswa', {{ json_encode($mahasiswa) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-white border border-gray-200 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-lg hover:shadow-xl" style="animation-delay: {{ $index * 0.1 }}s">
+            <div onclick="openModal('mahasiswa', {{ json_encode($mahasiswa) }})" class="flex-shrink-0 w-full sm:w-[calc(50%-8px)] md:w-[340px] lg:w-[380px] bg-slate-200 border border-slate-300 rounded-lg p-5 md:p-6 lg:p-7 text-center hover:border-blue-600 transition animate-on-scroll fade-in-up group cursor-pointer shadow-md hover:shadow-lg" style="animation-delay: {{ $index * 0.1 }}s">
               @if($mahasiswa->photo)
-              <img src="{{ asset('storage/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
+              <img src="{{ asset('storage/' . $mahasiswa->photo) }}" alt="{{ $mahasiswa->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-slate-300">
               @else
-              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
+              <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-full bg-slate-300 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
                 {{ $mahasiswa->initials }}
               </div>
               @endif
@@ -122,7 +122,7 @@
         </div>
 
         <button id="nextBtnMahasiswa"
-                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition z-10 flex items-center justify-center text-gray-700 shadow-lg">
+                class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-slate-200 border border-slate-300 rounded-full hover:bg-slate-300 transition z-10 flex items-center justify-center text-gray-700 shadow-md">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
@@ -142,11 +142,11 @@
 
       @if($mitra)
       <div class="flex justify-center animate-on-scroll fade-in-up px-4">
-        <div onclick="openModal('mitra', {{ json_encode($mitra) }})" class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-white border border-gray-200 rounded-lg p-6 md:p-7 lg:p-8 text-center hover:border-blue-600 transition cursor-pointer shadow-lg hover:shadow-xl">
+        <div onclick="openModal('mitra', {{ json_encode($mitra) }})" class="w-full max-w-sm md:max-w-md lg:max-w-lg bg-slate-200 border border-slate-300 rounded-lg p-6 md:p-7 lg:p-8 text-center hover:border-blue-600 transition cursor-pointer shadow-md hover:shadow-lg">
           @if($mitra->logo)
-          <img src="{{ asset('storage/' . $mitra->logo) }}" alt="{{ $mitra->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-gray-200">
+          <img src="{{ asset('storage/' . $mitra->logo) }}" alt="{{ $mitra->name }}" class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg object-cover mb-5 md:mb-6 lg:mb-6 border-4 border-slate-300">
           @else
-          <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg bg-gray-200 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
+          <div class="w-40 md:w-44 lg:w-48 h-40 md:h-44 lg:h-48 mx-auto rounded-lg bg-slate-300 flex items-center justify-center text-gray-700 text-4xl md:text-5xl lg:text-6xl font-light mb-5 md:mb-6 lg:mb-6">
             {{ $mitra->initials }}
           </div>
           @endif

@@ -3,22 +3,22 @@
     $code = App\Models\Code::first();
 @endphp
 
-<section id="code" class="py-20 bg-white">
+<section id="code" class="py-20 bg-slate-200">
   <div class="max-w-[1500px] mx-auto px-6">
     <h2 class="text-4xl font-light text-gray-800 text-center mb-4 tracking-wide animate-on-scroll fade-in-up"> Preview Kode Project IoT</h2>
     <p class="text-center text-gray-600 mb-12 animate-on-scroll fade-in-up" style="animation-delay: 0.1s">Source code Smart Farming</p>
 
     <!-- Code Tabs -->
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-6 animate-on-scroll fade-in-up border border-gray-200" style="animation-delay: 0.2s">
-      <div class="flex border-b border-gray-200">
+    <div class="bg-slate-200 rounded-2xl shadow-md overflow-hidden mb-6 animate-on-scroll fade-in-up border border-slate-300" style="animation-delay: 0.2s">
+      <div class="flex border-b border-slate-300">
         <button class="code-tab px-6 py-3 text-sm font-medium bg-blue-600 text-white transition" data-tab="arduino">Offline</button>
-        <button class="code-tab px-6 py-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition" data-tab="python">Online</button>
+        <button class="code-tab px-6 py-3 text-sm font-medium text-gray-600 hover:bg-slate-50 hover:text-gray-800 transition" data-tab="python">Online</button>
       </div>
       <div class="p-6">
         <!-- Arduino Code -->
         <div id="code-arduino" class="code-content">
-          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
+          <div class="bg-slate-50 rounded-lg overflow-hidden border border-slate-300">
+            <div class="bg-slate-100 px-4 py-2 flex items-center justify-between border-b border-slate-300">
               <span class="text-xs text-gray-600 font-mono">Online</span>
               <button onclick="copyCode('arduino')" class="text-xs text-gray-600 hover:text-blue-600 transition flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,8 +48,8 @@ void loop() {
 
         <!-- Python Code -->
         <div id="code-python" class="code-content hidden">
-          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-200">
-            <div class="bg-gray-100 px-4 py-2 flex items-center justify-between border-b border-gray-200">
+          <div class="bg-slate-50 rounded-lg overflow-hidden border border-slate-300">
+            <div class="bg-slate-100 px-4 py-2 flex items-center justify-between border-b border-slate-300">
               <span class="text-xs text-gray-600 font-mono">backend_api.py</span>
               <button onclick="copyCode('python')" class="text-xs text-gray-600 hover:text-blue-600 transition flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     <!-- Documentation -->
     <div class="mt-12 grid md:grid-cols-2 gap-6">
-      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-left shadow-lg hover:shadow-xl transition" style="animation-delay: 0.4s">
+      <div class="bg-slate-200 rounded-xl p-6 border border-slate-300 animate-on-scroll fade-in-left shadow-md hover:shadow-lg transition" style="animation-delay: 0.4s">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">📦 Hardware Requirements</h3>
         <ul class="space-y-2 text-sm text-gray-600">
           @forelse($code->hardware_requirements ?? [] as $item)
@@ -109,7 +109,7 @@ if __name__ == '__main__':
           @endforelse
         </ul>
       </div>
-      <div class="bg-white rounded-xl p-6 border border-gray-200 animate-on-scroll fade-in-right shadow-lg hover:shadow-xl transition" style="animation-delay: 0.4s">
+      <div class="bg-slate-200 rounded-xl p-6 border border-slate-300 animate-on-scroll fade-in-right shadow-md hover:shadow-lg transition" style="animation-delay: 0.4s">
         <h3 class="text-lg font-semibold text-gray-800 mb-3">⚙️ Software Stack</h3>
         <ul class="space-y-2 text-sm text-gray-600">
           @forelse($code->software_stack ?? [] as $item)
@@ -172,12 +172,12 @@ if __name__ == '__main__':
       // Remove active class from all tabs
       codeTabs.forEach(t => {
         t.classList.remove('bg-blue-600', 'text-white');
-        t.classList.add('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-800');
+        t.classList.add('text-gray-600', 'hover:bg-slate-50', 'hover:text-gray-800');
       });
 
       // Add active class to clicked tab
       tab.classList.add('bg-blue-600', 'text-white');
-      tab.classList.remove('text-gray-600', 'hover:bg-gray-50', 'hover:text-gray-800');
+      tab.classList.remove('text-gray-600', 'hover:bg-slate-50', 'hover:text-gray-800');
 
       // Hide all code contents
       codeContents.forEach(content => {
