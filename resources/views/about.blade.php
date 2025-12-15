@@ -37,8 +37,36 @@
       </div>
     </div>
 
-    <!-- Tim Dosen Section -->
-    <div class="mb-20">
+
+   <!-- Modul Section -->
+<div class="mb-20 px-4">
+  <div class="text-center animate-on-scroll fade-in-up">
+    
+    <h3 class="text-2xl md:text-3xl font-light text-gray-800 mb-4">
+      Modul P-LT Fun Coding: Smart Farming
+    </h3>
+
+    <p class="text-gray-600 mb-6 max-w-2xl mx-auto text-sm md:text-base">
+      Berikut ini adalah modul pembelajaran P-LT Fun Coding: Smart Farming
+      yang dapat diakses dan diunduh secara langsung melalui Google Drive.
+    </p>
+
+    <!-- Button Download -->
+    <a href="https://drive.google.com/file/d/1rjB6lZbxITXFykoAXq5E73qexbDbuoFi/view"
+       target="_blank"
+       class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg
+              text-sm md:text-base font-medium
+              hover:bg-red-700 transition">
+      Download Modul
+    </a>
+
+  </div>
+</div>
+
+
+
+    
+ <div class="mb-20">
       <div class="text-center mb-12 animate-on-scroll fade-in-up">
         <h3 class="text-2xl font-light text-gray-800 mb-3">Tim Dosen</h3>
         <div class="w-12 h-0.5 bg-gray-800 mx-auto"></div>
